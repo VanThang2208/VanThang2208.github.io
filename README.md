@@ -304,4 +304,4 @@ Code được phân phối dưới [MIT License](LICENSE).
 
 **📚 Happy Learning! Keep Coding & Keep Networking!**
 
-Made with ❤️ by Đào Văn Thắng - HUTECH Student | Network Engineering & Software Development
+Made with ❤️ by Đào Văn Thắng - HUTECH Student 
