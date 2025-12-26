@@ -60,7 +60,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {{ range first 6 (where .Site.RegularPages "Type" "posts") }}
+                {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" "posts") }}
                 <article class="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:border-blue-100 transition-all duration-300">
                     {{ if .Params.image }}
                     <div class="aspect-video relative overflow-hidden bg-gray-200">

@@ -61,3 +61,12 @@ theme = 'netcode'
 
 [outputs]
   home = ['HTML', 'RSS', 'JSON']
+
+[related]
+  threshold = 80
+  includeNewer = true
+  toLower = false
+  indices = [
+    { name = "tags", weight = 100 },
+    { name = "categories", weight = 50 }
+  ]

@@ -1,7 +1,42 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-  {{ end }}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <header class="mb-12">
+        <h1 class="text-3xl font-extrabold text-gray-900 mb-4">{{ .Title }}</h1>
+        {{ if .Content }}
+        <div class="prose prose-blue max-w-2xl text-gray-600">
+            {{ .Content }}
+        </div>
+        {{ end }}
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {{ range .Pages }}
+        <article class="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all">
+            {{ if .Params.image }}
+            <div class="aspect-video relative overflow-hidden bg-gray-200">
+                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            {{ end }}
+            <div class="p-6">
+                {{ with .Params.category }}
+                <span class="text-[10px] font-bold tracking-widest text-blue-600 uppercase mb-3 block">{{ . }}</span>
+                {{ end }}
+                <h2 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                </h2>
+                {{ if .Summary }}
+                <p class="text-gray-500 text-sm line-clamp-2 mb-4">
+                    {{ .Summary }}
+                </p>
+                {{ end }}
+                <div class="flex items-center text-xs text-gray-400">
+                    {{ if .Date }}
+                    <span>{{ .Date.Format "02/01/2006" }}</span>
+                    {{ end }}
+                </div>
+            </div>
+        </article>
+        {{ end }}
+    </div>
+</div>
 {{ end }}
