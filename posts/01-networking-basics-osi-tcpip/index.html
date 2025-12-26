@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhập môn Networking Basics: Mô hình OSI và TCP/IP | NetCode Blog - Đào Văn Thắng</title>
+    <meta name="description" content="Blog chia sẻ kiến thức về Lập trình Mạng Máy tính và JavaScript">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body>
+    <h1>NetCode Blog - Đào Văn Thắng</h1>
+
+  <nav>
+    <ul>
+    <li>
+      <a href="/">Trang chủ</a>
+    </li>
+    <li>
+      <a href="/posts/">Bài viết</a>
+    </li>
+    <li>
+      <a href="/about/">Giới thiệu</a>
+    </li>
+    <li>
+      <a href="/certificates/">Chứng chỉ</a>
+    </li>
+    <li>
+      <a href="/contact/">Liên hệ</a>
+    </li>
+    </ul>
+  </nav>
+
+
+    
+    <main>
+        
+  <h1>Nhập môn Networking Basics: Mô hình OSI và TCP/IP</h1>
+
+  
+  
+  <time datetime="2023-10-12T00:00:00&#43;00:00">October 12, 2023</time>
+
+  <h2 id="giới-thiệu">Giới thiệu</h2>
+<p>Trong thế giới mạng máy tính, việc hiểu rõ cách các thiết bị giao tiếp với nhau là vô cùng quan trọng. Hai mô hình được sử dụng rộng rãi nhất là <strong>mô hình OSI</strong> (Open Systems Interconnection) và <strong>bộ giao thức TCP/IP</strong>. Bài viết này sẽ giúp bạn nắm vững những kiến thức nền tảng này.</p>
+<h2 id="mô-hình-osi---7-tầng-cơ-bản">Mô hình OSI - 7 tầng cơ bản</h2>
+<p>Mô hình OSI được tổ chức ISO phát triển vào năm 1984, chia quá trình truyền thông mạng thành 7 tầng riêng biệt:</p>
+<h3 id="1-physical-layer-tầng-vật-lý">1. Physical Layer (Tầng Vật lý)</h3>
+<ul>
+<li><strong>Chức năng</strong>: Truyền tải các bit dữ liệu qua môi trường vật lý (cáp đồng, cáp quang, sóng radio)</li>
+<li><strong>Thiết bị</strong>: Hub, Repeater, Cables</li>
+<li><strong>Đặc điểm</strong>: Chuyển đổi dữ liệu thành tín hiệu điện, quang học hoặc sóng radio</li>
+</ul>
+<pre tabindex="0"><code>Ví dụ: Khi bạn cắm dây mạng RJ-45 vào máy tính, tầng Physical sẽ 
+xử lý việc truyền tín hiệu điện qua 8 sợi dây đồng trong cáp.
+</code></pre><h3 id="2-data-link-layer-tầng-liên-kết-dữ-liệu">2. Data Link Layer (Tầng Liên kết dữ liệu)</h3>
+<ul>
+<li><strong>Chức năng</strong>: Đóng gói dữ liệu thành frame, kiểm soát lỗi và điều khiển luồng</li>
+<li><strong>Giao thức</strong>: Ethernet, Wi-Fi (802.11), PPP</li>
+<li><strong>Địa chỉ</strong>: MAC Address (48-bit)</li>
+<li><strong>Thiết bị</strong>: Switch, Bridge</li>
+</ul>
+<p><strong>Cấu trúc Ethernet Frame:</strong></p>
+<pre tabindex="0"><code>|Preamble|Destination MAC|Source MAC|Type|Data|FCS|
+</code></pre><h3 id="3-network-layer-tầng-mạng">3. Network Layer (Tầng Mạng)</h3>
+<ul>
+<li><strong>Chức năng</strong>: Định tuyến gói tin từ nguồn đến đích qua nhiều mạng</li>
+<li><strong>Giao thức</strong>: IP (IPv4/IPv6), ICMP, OSPF, BGP</li>
+<li><strong>Địa chỉ</strong>: IP Address</li>
+<li><strong>Thiết bị</strong>: Router, Layer 3 Switch</li>
+</ul>
+<p><strong>Ví dụ IPv4 Packet Header:</strong></p>
+<pre tabindex="0"><code>Version | IHL | ToS | Total Length
+Identification | Flags | Fragment Offset
+TTL | Protocol | Header Checksum
+Source IP Address
+Destination IP Address
+</code></pre><h3 id="4-transport-layer-tầng-giao-vận">4. Transport Layer (Tầng Giao vận)</h3>
+<ul>
+<li><strong>Chức năng</strong>: Đảm bảo truyền dữ liệu tin cậy giữa hai host</li>
+<li><strong>Giao thức chính</strong>:
+<ul>
+<li><strong>TCP</strong> (Transmission Control Protocol): Hướng kết nối, đảm bảo tin cậy</li>
+<li><strong>UDP</strong> (User Datagram Protocol): Không kết nối, nhanh nhưng không đảm bảo</li>
+</ul>
+</li>
+<li><strong>Khái niệm</strong>: Port Number (0-65535)</li>
+</ul>
+<p><strong>So sánh TCP vs UDP:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Tiêu chí</th>
+          <th>TCP</th>
+          <th>UDP</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Kết nối</td>
+          <td>Có (3-way handshake)</td>
+          <td>Không</td>
+      </tr>
+      <tr>
+          <td>Độ tin cậy</td>
+          <td>Cao (có ACK)</td>
+          <td>Thấp</td>
+      </tr>
+      <tr>
+          <td>Tốc độ</td>
+          <td>Chậm hơn</td>
+          <td>Nhanh hơn</td>
+      </tr>
+      <tr>
+          <td>Sử dụng</td>
+          <td>HTTP, FTP, SSH</td>
+          <td>DNS, Streaming, Gaming</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="5-session-layer-tầng-phiên">5. Session Layer (Tầng Phiên)</h3>
+<ul>
+<li><strong>Chức năng</strong>: Quản lý phiên làm việc giữa các ứng dụng</li>
+<li><strong>Giao thức</strong>: NetBIOS, PPTP, RPC</li>
+</ul>
+<h3 id="6-presentation-layer-tầng-trình-bày">6. Presentation Layer (Tầng Trình bày)</h3>
+<ul>
+<li><strong>Chức năng</strong>: Mã hóa, giải mã, nén dữ liệu</li>
+<li><strong>Chức năng</strong>: SSL/TLS, JPEG, MPEG</li>
+</ul>
+<h3 id="7-application-layer-tầng-ứng-dụng">7. Application Layer (Tầng Ứng dụng)</h3>
+<ul>
+<li><strong>Chức năng</strong>: Giao diện giữa người dùng và mạng</li>
+<li><strong>Giao thức</strong>: HTTP, FTP, SMTP, DNS, SSH, Telnet</li>
+</ul>
+<h2 id="mô-hình-tcpip">Mô hình TCP/IP</h2>
+<p>Mô hình TCP/IP (còn gọi là Internet Protocol Suite) là mô hình thực tế được sử dụng trên Internet, gồm 4 tầng:</p>
+<h3 id="1-network-access-layer">1. Network Access Layer</h3>
+<ul>
+<li>Tương ứng với Physical + Data Link trong OSI</li>
+<li>Xử lý việc truyền dữ liệu trên phương tiện vật lý cụ thể</li>
+</ul>
+<h3 id="2-internet-layer">2. Internet Layer</h3>
+<ul>
+<li>Tương ứng Network Layer trong OSI</li>
+<li>Giao thức chính: <strong>IP, ICMP, ARP</strong></li>
+</ul>
+<p><strong>Ví dụ IPv4 Address:</strong></p>
+<pre tabindex="0"><code>192.168.1.100/24
+- Network: 192.168.1.0
+- Host: 100
+- Subnet Mask: 255.255.255.0
+- Broadcast: 192.168.1.255
+</code></pre><h3 id="3-transport-layer">3. Transport Layer</h3>
+<ul>
+<li>Giống Transport Layer trong OSI</li>
+<li>TCP/UDP</li>
+</ul>
+<h3 id="4-application-layer">4. Application Layer</h3>
+<ul>
+<li>Kết hợp Session, Presentation, Application của OSI</li>
+</ul>
+<h2 id="so-sánh-osi-vs-tcpip">So sánh OSI vs TCP/IP</h2>
+<pre tabindex="0"><code>OSI Model              TCP/IP Model
+-----------            -------------
+Application   ------&gt;  Application
+Presentation  ------&gt;  
+Session       ------&gt;  
+-----------            -------------
+Transport     ------&gt;  Transport
+-----------            -------------
+Network       ------&gt;  Internet
+-----------            -------------
+Data Link     ------&gt;  Network Access
+Physical      ------&gt;  
+</code></pre><h2 id="quá-trình-truyền-dữ-liệu">Quá trình truyền dữ liệu</h2>
+<h3 id="encapsulation-đóng-gói-dữ-liệu">Encapsulation (Đóng gói dữ liệu)</h3>
+<p>Khi gửi dữ liệu, mỗi tầng thêm header riêng:</p>
+<ol>
+<li><strong>Application</strong>: Data</li>
+<li><strong>Transport</strong>: Segment (Data + TCP/UDP Header)</li>
+<li><strong>Network</strong>: Packet (Segment + IP Header)</li>
+<li><strong>Data Link</strong>: Frame (Packet + Ethernet Header + Trailer)</li>
+<li><strong>Physical</strong>: Bits</li>
+</ol>
+<h3 id="de-encapsulation-mở-gói-dữ-liệu">De-encapsulation (Mở gói dữ liệu)</h3>
+<p>Khi nhận dữ liệu, quá trình ngược lại:</p>
+<pre tabindex="0"><code>Bits -&gt; Frame -&gt; Packet -&gt; Segment -&gt; Data
+</code></pre><h2 id="ví-dụ-thực-tế-truy-cập-website">Ví dụ thực tế: Truy cập website</h2>
+<p>Khi bạn truy cập <code>https://google.com</code>:</p>
+<ol>
+<li><strong>Application Layer</strong>: Trình duyệt tạo HTTP Request</li>
+<li><strong>Transport Layer</strong>: TCP thiết lập kết nối (3-way handshake)</li>
+<li><strong>Network Layer</strong>: IP định tuyến gói tin đến server Google</li>
+<li><strong>Data Link</strong>: Ethernet đóng gói thành frame</li>
+<li><strong>Physical</strong>: Truyền tín hiệu qua cáp mạng</li>
+</ol>
+<h2 id="thực-hành-với-wireshark">Thực hành với Wireshark</h2>
+<p>Để hiểu rõ hơn, bạn nên sử dụng Wireshark để bắt và phân tích gói tin:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Cài đặt Wireshark trên Windows/Mac/Linux</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Sau đó bắt gói tin trên interface mạng đang sử dụng</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Bài tập</strong>: Hãy bắt gói tin khi ping đến google.com và quan sát:</p>
+<ul>
+<li>ICMP Request/Reply</li>
+<li>IP Header (TTL, Source/Dest IP)</li>
+<li>Ethernet Frame</li>
+</ul>
+<h2 id="tầm-quan-trọng-của-việc-hiểu-ositcp-ip">Tầm quan trọng của việc hiểu OSI/TCP-IP</h2>
+<ul>
+<li><strong>Troubleshooting</strong>: Xác định vấn đề ở tầng nào</li>
+<li><strong>Security</strong>: Hiểu cách tấn công và phòng thủ ở từng tầng</li>
+<li><strong>Thiết kế mạng</strong>: Lựa chọn thiết bị và giao thức phù hợp</li>
+<li><strong>Học các giao thức nâng cao</strong>: OSPF, BGP, MPLS, SDN</li>
+</ul>
+<h2 id="kết-luận">Kết luận</h2>
+<p>Hiểu rõ mô hình OSI và TCP/IP là nền tảng không thể thiếu cho bất kỳ ai muốn trở thành Network Engineer. Mặc dù OSI là mô hình lý thuyết và TCP/IP là mô hình thực tế, việc nắm vững cả hai sẽ giúp bạn có cái nhìn toàn diện về cách Internet hoạt động.</p>
+<p>Trong bài viết tiếp theo, chúng ta sẽ đi sâu vào <strong>Subnetting và VLSM</strong> - kỹ năng quan trọng cho việc thiết kế mạng IP.</p>
+<h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo</h2>
+<ul>
+<li>RFC 791: Internet Protocol</li>
+<li>RFC 793: Transmission Control Protocol</li>
+<li>Cisco Networking Academy: Networking Basics</li>
+<li>Computer Networks - Andrew S. Tanenbaum</li>
+</ul>
+<hr>
+<p><em>Bạn có câu hỏi nào về mô hình OSI hay TCP/IP? Hãy để lại comment hoặc liên hệ với mình qua trang <a href="/contact/">Liên hệ</a>!</em></p>
+
+  
+  <div>
+    <div>Tags:</div>
+    <ul>
+        <li><a href="/tags/networking/">Networking</a></li>
+        <li><a href="/tags/osi/">Osi</a></li>
+        <li><a href="/tags/tcp/ip/">Tcp/Ip</a></li>
+        <li><a href="/tags/c%C6%A1-b%E1%BA%A3n/">Cơ Bản</a></li>
+    </ul>
+  </div>
+
+
+    </main>
+    
+    <p>Copyright 2025. All rights reserved.</p>
+
+    
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

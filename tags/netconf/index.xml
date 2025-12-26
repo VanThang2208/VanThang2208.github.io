@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Netconf on NetCode Blog - Đào Văn Thắng</title>
+    <link>https://vanthang2208.github.io/tags/netconf/</link>
+    <description>Recent content in Netconf on NetCode Blog - Đào Văn Thắng</description>
+    <generator>Hugo</generator>
+    <language>vi</language>
+    <lastBuildDate>Wed, 22 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://vanthang2208.github.io/tags/netconf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>REST APIs &amp; RESTCONF: Giao tiếp với Network Devices hiện đại</title>
+      <link>https://vanthang2208.github.io/posts/08-rest-apis-restconf/</link>
+      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/08-rest-apis-restconf/</guid>
+      <description>Tìm hiểu về REST APIs, RESTCONF và cách sử dụng Python Requests để tương tác với modern network devices. Từ lý thuyết đến thực hành với Cisco devices.</description>
+    </item>
+  </channel>
+</rss>

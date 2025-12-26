@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dynamic-Routing on NetCode Blog - Đào Văn Thắng</title>
+    <link>https://vanthang2208.github.io/tags/dynamic-routing/</link>
+    <description>Recent content in Dynamic-Routing on NetCode Blog - Đào Văn Thắng</description>
+    <generator>Hugo</generator>
+    <language>vi</language>
+    <lastBuildDate>Wed, 08 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://vanthang2208.github.io/tags/dynamic-routing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OSPF Routing Protocol: Dynamic Routing trong doanh nghiệp</title>
+      <link>https://vanthang2208.github.io/posts/06-ospf-routing-protocol/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/06-ospf-routing-protocol/</guid>
+      <description>Tìm hiểu về OSPF - giao thức định tuyến động phổ biến nhất trong doanh nghiệp. Từ lý thuyết đến cấu hình thực tế trên Cisco routers.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,63 @@
+baseURL = 'https://vanthang2208.github.io/'
+languageCode = 'vi'
+title = 'NetCode Blog - Đào Văn Thắng'
+theme = 'netcode'
+
+[params]
+  description = 'Blog chia sẻ kiến thức về Lập trình Mạng Máy tính và JavaScript'
+  author = 'Đào Văn Thắng'
+  school = 'HUTECH'
+  major = 'Công Nghệ Phần Mềm'
+  
+  [params.social]
+    email = 'vanthang.network@gmail.com'
+    github = 'VanThang2208'
+    linkedin = ''
+    facebook = ''
+
+[menu]
+  [[menu.main]]
+    identifier = 'home'
+    name = 'Trang chủ'
+    url = '/'
+    weight = 1
+  
+  [[menu.main]]
+    identifier = 'blog'
+    name = 'Bài viết'
+    url = '/posts/'
+    weight = 2
+  
+  [[menu.main]]
+    identifier = 'about'
+    name = 'Giới thiệu'
+    url = '/about/'
+    weight = 3
+  
+  [[menu.main]]
+    identifier = 'certificates'
+    name = 'Chứng chỉ'
+    url = '/certificates/'
+    weight = 4
+  
+  [[menu.main]]
+    identifier = 'contact'
+    name = 'Liên hệ'
+    url = '/contact/'
+    weight = 5
+
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = 'monokai'
+    lineNos = true
+    lineNumbersInTable = true
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']

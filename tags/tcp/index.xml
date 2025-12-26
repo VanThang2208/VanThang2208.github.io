@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tcp on NetCode Blog - Đào Văn Thắng</title>
+    <link>https://vanthang2208.github.io/tags/tcp/</link>
+    <description>Recent content in Tcp on NetCode Blog - Đào Văn Thắng</description>
+    <generator>Hugo</generator>
+    <language>vi</language>
+    <lastBuildDate>Wed, 25 Oct 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://vanthang2208.github.io/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python Socket Programming: Xây dựng Network Applications</title>
+      <link>https://vanthang2208.github.io/posts/04-python-socket-programming/</link>
+      <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/04-python-socket-programming/</guid>
+      <description>Học lập trình socket với Python để xây dựng các ứng dụng mạng thực tế: chat server, file transfer, port scanner và network monitoring tools.</description>
+    </item>
+    <item>
+      <title>Nhập môn Networking Basics: Mô hình OSI và TCP/IP</title>
+      <link>https://vanthang2208.github.io/posts/01-networking-basics-osi-tcpip/</link>
+      <pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/01-networking-basics-osi-tcpip/</guid>
+      <description>Tìm hiểu chi tiết về mô hình OSI 7 tầng và bộ giao thức TCP/IP - nền tảng cốt lõi của mạng máy tính hiện đại. Bài viết phù hợp cho người mới bắt đầu học networking.</description>
+    </item>
+  </channel>
+</rss>

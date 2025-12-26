@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Socket on NetCode Blog - Đào Văn Thắng</title>
+    <link>https://vanthang2208.github.io/tags/socket/</link>
+    <description>Recent content in Socket on NetCode Blog - Đào Văn Thắng</description>
+    <generator>Hugo</generator>
+    <language>vi</language>
+    <lastBuildDate>Wed, 25 Oct 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://vanthang2208.github.io/tags/socket/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python Socket Programming: Xây dựng Network Applications</title>
+      <link>https://vanthang2208.github.io/posts/04-python-socket-programming/</link>
+      <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/04-python-socket-programming/</guid>
+      <description>Học lập trình socket với Python để xây dựng các ứng dụng mạng thực tế: chat server, file transfer, port scanner và network monitoring tools.</description>
+    </item>
+  </channel>
+</rss>

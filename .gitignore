@@ -1,0 +1,50 @@
+# Hugo
+/hugo-blog/public/
+/hugo-blog/resources/_gen/
+/hugo-blog/.hugo_build.lock
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# Node (if needed)
+node_modules/
+package-lock.json
+
+# Python (if using automation scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Backup files
+*.old
+*-old.*

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Scripting on NetCode Blog - Đào Văn Thắng</title>
+    <link>https://vanthang2208.github.io/tags/scripting/</link>
+    <description>Recent content in Scripting on NetCode Blog - Đào Văn Thắng</description>
+    <generator>Hugo</generator>
+    <language>vi</language>
+    <lastBuildDate>Wed, 15 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://vanthang2208.github.io/tags/scripting/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Network Automation với Python: Từ Manual đến Automation</title>
+      <link>https://vanthang2208.github.io/posts/07-network-automation-python/</link>
+      <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/07-network-automation-python/</guid>
+      <description>Học cách tự động hóa các tác vụ mạng với Python. Sử dụng Netmiko, Paramiko để kết nối và cấu hình hàng loạt network devices một cách hiệu quả.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ip-Addressing on NetCode Blog - Đào Văn Thắng</title>
+    <link>https://vanthang2208.github.io/tags/ip-addressing/</link>
+    <description>Recent content in Ip-Addressing on NetCode Blog - Đào Văn Thắng</description>
+    <generator>Hugo</generator>
+    <language>vi</language>
+    <lastBuildDate>Wed, 01 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://vanthang2208.github.io/tags/ip-addressing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Subnetting &amp; VLSM: Bí kíp chia mạng hiệu quả</title>
+      <link>https://vanthang2208.github.io/posts/05-subnetting-vlsm/</link>
+      <pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/05-subnetting-vlsm/</guid>
+      <description>Hướng dẫn chi tiết về Subnetting và Variable Length Subnet Masking (VLSM) - kỹ năng bắt buộc cho mọi network engineer. Bao gồm công thức, ví dụ thực tế và bài tập.</description>
+    </item>
+  </channel>
+</rss>

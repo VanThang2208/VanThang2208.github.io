@@ -1,0 +1,50 @@
+{{ define "main" }}
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <a href="/posts/" class="inline-flex items-center text-sm text-blue-600 font-medium mb-8 hover:translate-x-1 transition-transform">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Quay lại danh sách
+    </a>
+
+    <header class="mb-10">
+        <div class="flex items-center space-x-3 mb-4">
+            {{ with .Params.category }}
+            <span class="bg-blue-50 text-blue-600 text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded">{{ . }}</span>
+            {{ end }}
+            <span class="text-gray-400 text-sm">{{ .Date.Format "02/01/2006" }}</span>
+            <span class="text-gray-300">•</span>
+            <span class="text-gray-400 text-sm">{{ .ReadingTime }} phút đọc</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+            {{ .Title }}
+        </h1>
+        <div class="flex items-center space-x-4 border-b border-gray-100 pb-8">
+            <img src="/images/profileIMG.png" alt="{{ .Site.Params.author }}" class="w-10 h-10 rounded-full" />
+            <div>
+                <p class="text-sm font-bold text-gray-900">{{ .Site.Params.author }}</p>
+                <p class="text-xs text-gray-500">{{ .Site.Params.school }} - {{ .Site.Params.major }}</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="prose prose-blue prose-lg max-w-none text-gray-700 leading-relaxed">
+        {{ if .Params.image }}
+        <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-auto rounded-3xl mb-10 shadow-lg" />
+        {{ end }}
+        
+        {{ .Content }}
+    </div>
+
+    <footer class="mt-16 pt-8 border-t border-gray-100">
+        <div class="flex justify-between items-center">
+            <div class="flex space-x-4">
+                <button class="text-gray-400 hover:text-blue-600 transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </button>
+            </div>
+            <a href="/posts/" class="px-6 py-2 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all">Xem bài viết khác</a>
+        </div>
+    </footer>
+</article>
+{{ end }}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Javascript on NetCode Blog - Đào Văn Thắng</title>
+    <link>https://vanthang2208.github.io/tags/javascript/</link>
+    <description>Recent content in Javascript on NetCode Blog - Đào Văn Thắng</description>
+    <generator>Hugo</generator>
+    <language>vi</language>
+    <lastBuildDate>Fri, 20 Oct 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://vanthang2208.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaScript Essentials 2: Objects, Arrays và JSON cho Network APIs</title>
+      <link>https://vanthang2208.github.io/posts/03-javascript-essentials-2-objects-json/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/03-javascript-essentials-2-objects-json/</guid>
+      <description>Đi sâu vào Objects, Arrays và JSON - định dạng dữ liệu phổ biến nhất trong các API mạng hiện đại. Học cách xử lý dữ liệu phức tạp từ network devices.</description>
+    </item>
+    <item>
+      <title>JavaScript Essentials 1: Nền tảng cho Network Automation</title>
+      <link>https://vanthang2208.github.io/posts/02-javascript-essentials-1/</link>
+      <pubDate>Sun, 15 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/02-javascript-essentials-1/</guid>
+      <description>Tại sao Network Engineer cần học JavaScript? Khám phá cú pháp cơ bản, biến, kiểu dữ liệu, vòng lặp và cách áp dụng JavaScript vào tự động hóa mạng.</description>
+    </item>
+  </channel>
+</rss>

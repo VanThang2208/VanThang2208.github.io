@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on NetCode Blog - Đào Văn Thắng</title>
+    <link>https://vanthang2208.github.io/tags/</link>
+    <description>Recent content in Tags on NetCode Blog - Đào Văn Thắng</description>
+    <generator>Hugo</generator>
+    <language>vi</language>
+    <lastBuildDate>Wed, 29 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://vanthang2208.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ccna</title>
+      <link>https://vanthang2208.github.io/tags/ccna/</link>
+      <pubDate>Wed, 29 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/ccna/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cisco</title>
+      <link>https://vanthang2208.github.io/tags/cisco/</link>
+      <pubDate>Wed, 29 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/cisco/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hands-On</title>
+      <link>https://vanthang2208.github.io/tags/hands-on/</link>
+      <pubDate>Wed, 29 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/hands-on/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lab</title>
+      <link>https://vanthang2208.github.io/tags/lab/</link>
+      <pubDate>Wed, 29 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/lab/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Packet-Tracer</title>
+      <link>https://vanthang2208.github.io/tags/packet-tracer/</link>
+      <pubDate>Wed, 29 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/packet-tracer/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Practice</title>
+      <link>https://vanthang2208.github.io/tags/practice/</link>
+      <pubDate>Wed, 29 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/practice/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Api</title>
+      <link>https://vanthang2208.github.io/tags/api/</link>
+      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/api/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Automation</title>
+      <link>https://vanthang2208.github.io/tags/automation/</link>
+      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/automation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Devnet</title>
+      <link>https://vanthang2208.github.io/tags/devnet/</link>
+      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/devnet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Netconf</title>
+      <link>https://vanthang2208.github.io/tags/netconf/</link>
+      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/netconf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rest-Api</title>
+      <link>https://vanthang2208.github.io/tags/rest-api/</link>
+      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/rest-api/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Restconf</title>
+      <link>https://vanthang2208.github.io/tags/restconf/</link>
+      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/restconf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Netmiko</title>
+      <link>https://vanthang2208.github.io/tags/netmiko/</link>
+      <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/netmiko/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Paramiko</title>
+      <link>https://vanthang2208.github.io/tags/paramiko/</link>
+      <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/paramiko/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>https://vanthang2208.github.io/tags/python/</link>
+      <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Scripting</title>
+      <link>https://vanthang2208.github.io/tags/scripting/</link>
+      <pubDate>Wed, 15 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/scripting/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dynamic-Routing</title>
+      <link>https://vanthang2208.github.io/tags/dynamic-routing/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/dynamic-routing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ospf</title>
+      <link>https://vanthang2208.github.io/tags/ospf/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/ospf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Routing</title>
+      <link>https://vanthang2208.github.io/tags/routing/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/routing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ip-Addressing</title>
+      <link>https://vanthang2208.github.io/tags/ip-addressing/</link>
+      <pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/ip-addressing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Networking</title>
+      <link>https://vanthang2208.github.io/tags/networking/</link>
+      <pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/networking/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Subnetting</title>
+      <link>https://vanthang2208.github.io/tags/subnetting/</link>
+      <pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/subnetting/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vlsm</title>
+      <link>https://vanthang2208.github.io/tags/vlsm/</link>
+      <pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/vlsm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Programming</title>
+      <link>https://vanthang2208.github.io/tags/programming/</link>
+      <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Socket</title>
+      <link>https://vanthang2208.github.io/tags/socket/</link>
+      <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/socket/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tcp</title>
+      <link>https://vanthang2208.github.io/tags/tcp/</link>
+      <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/tcp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Udp</title>
+      <link>https://vanthang2208.github.io/tags/udp/</link>
+      <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/udp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Advanced</title>
+      <link>https://vanthang2208.github.io/tags/advanced/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/advanced/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Javascript</title>
+      <link>https://vanthang2208.github.io/tags/javascript/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/javascript/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Json</title>
+      <link>https://vanthang2208.github.io/tags/json/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/json/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Beginner</title>
+      <link>https://vanthang2208.github.io/tags/beginner/</link>
+      <pubDate>Sun, 15 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/beginner/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cơ Bản</title>
+      <link>https://vanthang2208.github.io/tags/c%C6%A1-b%E1%BA%A3n/</link>
+      <pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/c%C6%A1-b%E1%BA%A3n/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Osi</title>
+      <link>https://vanthang2208.github.io/tags/osi/</link>
+      <pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/osi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tcp/Ip</title>
+      <link>https://vanthang2208.github.io/tags/tcp/ip/</link>
+      <pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/tags/tcp/ip/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Blue</title>
+      <link>https://vanthang2208.github.io/tags/blue/</link>
+      <pubDate>Wed, 15 Mar 2023 11:00:00 -0700</pubDate>
+      <guid>https://vanthang2208.github.io/tags/blue/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Green</title>
+      <link>https://vanthang2208.github.io/tags/green/</link>
+      <pubDate>Wed, 15 Mar 2023 11:00:00 -0700</pubDate>
+      <guid>https://vanthang2208.github.io/tags/green/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Red</title>
+      <link>https://vanthang2208.github.io/tags/red/</link>
+      <pubDate>Wed, 15 Mar 2023 11:00:00 -0700</pubDate>
+      <guid>https://vanthang2208.github.io/tags/red/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

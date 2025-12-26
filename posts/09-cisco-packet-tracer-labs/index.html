@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cisco Packet Tracer Labs: Hands-on Practice từ cơ bản đến nâng cao | NetCode Blog - Đào Văn Thắng</title>
+    <meta name="description" content="Blog chia sẻ kiến thức về Lập trình Mạng Máy tính và JavaScript">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body>
+    <h1>NetCode Blog - Đào Văn Thắng</h1>
+
+  <nav>
+    <ul>
+    <li>
+      <a href="/">Trang chủ</a>
+    </li>
+    <li>
+      <a href="/posts/">Bài viết</a>
+    </li>
+    <li>
+      <a href="/about/">Giới thiệu</a>
+    </li>
+    <li>
+      <a href="/certificates/">Chứng chỉ</a>
+    </li>
+    <li>
+      <a href="/contact/">Liên hệ</a>
+    </li>
+    </ul>
+  </nav>
+
+
+    
+    <main>
+        
+  <h1>Cisco Packet Tracer Labs: Hands-on Practice từ cơ bản đến nâng cao</h1>
+
+  
+  
+  <time datetime="2023-11-29T00:00:00&#43;00:00">November 29, 2023</time>
+
+  <h2 id="giới-thiệu-cisco-packet-tracer">Giới thiệu Cisco Packet Tracer</h2>
+<h3 id="packet-tracer-là-gì">Packet Tracer là gì?</h3>
+<p><strong>Cisco Packet Tracer</strong> là network simulation tool miễn phí từ Cisco, cho phép:</p>
+<ul>
+<li><strong>Thiết kế</strong> network topologies</li>
+<li><strong>Cấu hình</strong> Cisco devices</li>
+<li><strong>Simulate</strong> network behavior</li>
+<li><strong>Troubleshoot</strong> issues</li>
+<li><strong>Learn</strong> networking concepts</li>
+</ul>
+<h3 id="download--install">Download &amp; Install</h3>
+<ol>
+<li>Truy cập: <a href="https://www.netacad.com">netacad.com</a></li>
+<li>Create account (free)</li>
+<li>Download Packet Tracer (Windows/Mac/Linux)</li>
+<li>Install và activate với account</li>
+</ol>
+<h3 id="interface-overview">Interface Overview</h3>
+<pre tabindex="0"><code>┌─────────────────────────────────────────┐
+│  Menu Bar                               │
+├─────────────────────────────────────────┤
+│  Toolbar (Select, Move, Delete, etc)   │
+├─────────────────────────────────────────┤
+│                                         │
+│  ┌───────────────┐  ┌────────────────┐ │
+│  │   Device      │  │  Workspace     │ │
+│  │   Selection   │  │  (Topology)    │ │
+│  │   Panel       │  │                │ │
+│  └───────────────┘  └────────────────┘ │
+│                                         │
+└─────────────────────────────────────────┘
+</code></pre><h2 id="lab-1-basic-switch-configuration">Lab 1: Basic Switch Configuration</h2>
+<h3 id="topology">Topology</h3>
+<pre tabindex="0"><code>PC1 ──── SW1 ──── PC2
+</code></pre><h3 id="objectives">Objectives</h3>
+<ul>
+<li>Cấu hình basic switch settings</li>
+<li>Set hostname, passwords</li>
+<li>Configure VLANs</li>
+<li>Test connectivity</li>
+</ul>
+<h3 id="step-1-tạo-topology">Step 1: Tạo Topology</h3>
+<ol>
+<li>
+<p><strong>Add Devices:</strong></p>
+<ul>
+<li>Drag 1 switch (2960) vào workspace</li>
+<li>Drag 2 PCs</li>
+</ul>
+</li>
+<li>
+<p><strong>Connect Devices:</strong></p>
+<ul>
+<li>Click &ldquo;Connections&rdquo; (lightning icon)</li>
+<li>Select &ldquo;Copper Straight-Through&rdquo;</li>
+<li>Connect PC1 Fa0 → SW1 Fa0/1</li>
+<li>Connect PC2 Fa0 → SW1 Fa0/2</li>
+</ul>
+</li>
+</ol>
+<h3 id="step-2-configure-pcs">Step 2: Configure PCs</h3>
+<p><strong>PC1:</strong></p>
+<pre tabindex="0"><code>IP Address: 192.168.1.10
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.1.1
+</code></pre><p><strong>PC2:</strong></p>
+<pre tabindex="0"><code>IP Address: 192.168.1.20
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.1.1
+</code></pre><h3 id="step-3-configure-switch">Step 3: Configure Switch</h3>
+<p>Click on SW1 → CLI tab:</p>
+<pre tabindex="0"><code>Switch&gt; enable
+Switch# configure terminal
+
+! Set hostname
+Switch(config)# hostname SW1
+
+! Console password
+SW1(config)# line console 0
+SW1(config-line)# password cisco
+SW1(config-line)# login
+SW1(config-line)# exit
+
+! Enable password
+SW1(config)# enable secret class
+
+! VTY (Telnet/SSH) password
+SW1(config)# line vty 0 15
+SW1(config-line)# password cisco
+SW1(config-line)# login
+SW1(config-line)# exit
+
+! Banner
+SW1(config)# banner motd #
+Unauthorized access is prohibited!
+#
+
+! Interface descriptions
+SW1(config)# interface FastEthernet0/1
+SW1(config-if)# description Connection to PC1
+SW1(config-if)# exit
+
+SW1(config)# interface FastEthernet0/2
+SW1(config-if)# description Connection to PC2
+SW1(config-if)# exit
+
+! Save configuration
+SW1(config)# exit
+SW1# copy running-config startup-config
+</code></pre><h3 id="step-4-verify">Step 4: Verify</h3>
+<pre tabindex="0"><code>SW1# show running-config
+SW1# show interfaces status
+SW1# show mac address-table
+</code></pre><h3 id="step-5-test-connectivity">Step 5: Test Connectivity</h3>
+<p>On PC1:</p>
+<pre tabindex="0"><code>C:\&gt; ping 192.168.1.20
+</code></pre><p>✅ Should see successful replies!</p>
+<h2 id="lab-2-vlans-và-inter-vlan-routing">Lab 2: VLANs và Inter-VLAN Routing</h2>
+<h3 id="topology-1">Topology</h3>
+<pre tabindex="0"><code>    PC1 (VLAN 10)
+     |
+    SW1 ────── R1
+     |
+    PC2 (VLAN 20)
+</code></pre><h3 id="objectives-1">Objectives</h3>
+<ul>
+<li>Create VLANs</li>
+<li>Assign ports to VLANs</li>
+<li>Configure Router-on-a-Stick</li>
+<li>Test inter-VLAN communication</li>
+</ul>
+<h3 id="configuration">Configuration</h3>
+<p><strong>PC1:</strong></p>
+<pre tabindex="0"><code>IP: 192.168.10.10
+Mask: 255.255.255.0
+Gateway: 192.168.10.1
+</code></pre><p><strong>PC2:</strong></p>
+<pre tabindex="0"><code>IP: 192.168.20.10
+Mask: 255.255.255.0
+Gateway: 192.168.20.1
+</code></pre><p><strong>SW1 Configuration:</strong></p>
+<pre tabindex="0"><code>SW1(config)# vlan 10
+SW1(config-vlan)# name Sales
+SW1(config-vlan)# exit
+
+SW1(config)# vlan 20
+SW1(config-vlan)# name Engineering
+SW1(config-vlan)# exit
+
+! Assign ports to VLANs
+SW1(config)# interface FastEthernet0/1
+SW1(config-if)# switchport mode access
+SW1(config-if)# switchport access vlan 10
+SW1(config-if)# exit
+
+SW1(config)# interface FastEthernet0/2
+SW1(config-if)# switchport mode access
+SW1(config-if)# switchport access vlan 20
+SW1(config-if)# exit
+
+! Trunk to router
+SW1(config)# interface GigabitEthernet0/1
+SW1(config-if)# switchport mode trunk
+SW1(config-if)# exit
+</code></pre><p><strong>R1 Configuration (Router-on-a-Stick):</strong></p>
+<pre tabindex="0"><code>R1(config)# interface GigabitEthernet0/0
+R1(config-if)# no shutdown
+R1(config-if)# exit
+
+! Subinterface for VLAN 10
+R1(config)# interface GigabitEthernet0/0.10
+R1(config-subif)# encapsulation dot1Q 10
+R1(config-subif)# ip address 192.168.10.1 255.255.255.0
+R1(config-subif)# exit
+
+! Subinterface for VLAN 20
+R1(config)# interface GigabitEthernet0/0.20
+R1(config-subif)# encapsulation dot1Q 20
+R1(config-subif)# ip address 192.168.20.1 255.255.255.0
+R1(config-subif)# exit
+</code></pre><h3 id="verify">Verify</h3>
+<pre tabindex="0"><code>SW1# show vlan brief
+SW1# show interfaces trunk
+
+R1# show ip interface brief
+R1# show ip route
+</code></pre><h3 id="test">Test</h3>
+<p>From PC1:</p>
+<pre tabindex="0"><code>C:\&gt; ping 192.168.20.10
+</code></pre><p>✅ Should work! Traffic routes through R1.</p>
+<h2 id="lab-3-static-routing">Lab 3: Static Routing</h2>
+<h3 id="topology-2">Topology</h3>
+<pre tabindex="0"><code>192.168.1.0/24          10.1.1.0/30           192.168.2.0/24
+    PC1                                           PC2
+     |                                             |
+    R1 ─────────────────────────── R2
+  .1 | .1                      .2 | .1
+</code></pre><h3 id="ip-addressing">IP Addressing</h3>
+<p><strong>PC1:</strong> 192.168.1.10/24, GW: 192.168.1.1<br>
+<strong>PC2:</strong> 192.168.2.10/24, GW: 192.168.2.1<br>
+<strong>R1 G0/0:</strong> 192.168.1.1/24<br>
+<strong>R1 G0/1:</strong> 10.1.1.1/30<br>
+<strong>R2 G0/0:</strong> 10.1.1.2/30<br>
+<strong>R2 G0/1:</strong> 192.168.2.1/24</p>
+<h3 id="r1-configuration">R1 Configuration</h3>
+<pre tabindex="0"><code>R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ip address 192.168.1.1 255.255.255.0
+R1(config-if)# no shutdown
+R1(config-if)# exit
+
+R1(config)# interface GigabitEthernet0/1
+R1(config-if)# ip address 10.1.1.1 255.255.255.252
+R1(config-if)# no shutdown
+R1(config-if)# exit
+
+! Static route to 192.168.2.0/24 network
+R1(config)# ip route 192.168.2.0 255.255.255.0 10.1.1.2
+</code></pre><h3 id="r2-configuration">R2 Configuration</h3>
+<pre tabindex="0"><code>R2(config)# interface GigabitEthernet0/0
+R2(config-if)# ip address 10.1.1.2 255.255.255.252
+R2(config-if)# no shutdown
+R2(config-if)# exit
+
+R2(config)# interface GigabitEthernet0/1
+R2(config-if)# ip address 192.168.2.1 255.255.255.0
+R2(config-if)# no shutdown
+R2(config-if)# exit
+
+! Static route to 192.168.1.0/24 network
+R2(config)# ip route 192.168.1.0 255.255.255.0 10.1.1.1
+</code></pre><h3 id="verify-1">Verify</h3>
+<pre tabindex="0"><code>R1# show ip route
+R1# show ip interface brief
+
+R2# show ip route
+</code></pre><h3 id="test-1">Test</h3>
+<p>From PC1:</p>
+<pre tabindex="0"><code>C:\&gt; ping 192.168.2.10
+C:\&gt; tracert 192.168.2.10
+</code></pre><h2 id="lab-4-ospf-dynamic-routing">Lab 4: OSPF Dynamic Routing</h2>
+<h3 id="topology-3">Topology</h3>
+<pre tabindex="0"><code>Area 0 (Backbone)
+
+192.168.1.0/24    10.1.1.0/30      10.1.2.0/30    192.168.3.0/24
+    PC1              |                  |              PC2
+     |               |                  |               |
+    R1 ─────────── R2 ─────────────── R3
+</code></pre><h3 id="configuration-1">Configuration</h3>
+<p><strong>R1:</strong></p>
+<pre tabindex="0"><code>R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ip address 192.168.1.1 255.255.255.0
+R1(config-if)# no shutdown
+
+R1(config)# interface GigabitEthernet0/1
+R1(config-if)# ip address 10.1.1.1 255.255.255.252
+R1(config-if)# no shutdown
+
+! OSPF Configuration
+R1(config)# router ospf 1
+R1(config-router)# router-id 1.1.1.1
+R1(config-router)# network 192.168.1.0 0.0.0.255 area 0
+R1(config-router)# network 10.1.1.0 0.0.0.3 area 0
+R1(config-router)# passive-interface GigabitEthernet0/0
+</code></pre><p><strong>R2:</strong></p>
+<pre tabindex="0"><code>R2(config)# interface GigabitEthernet0/0
+R2(config-if)# ip address 10.1.1.2 255.255.255.252
+R2(config-if)# no shutdown
+
+R2(config)# interface GigabitEthernet0/1
+R2(config-if)# ip address 10.1.2.1 255.255.255.252
+R2(config-if)# no shutdown
+
+! OSPF Configuration
+R2(config)# router ospf 1
+R2(config-router)# router-id 2.2.2.2
+R2(config-router)# network 10.1.1.0 0.0.0.3 area 0
+R2(config-router)# network 10.1.2.0 0.0.0.3 area 0
+</code></pre><p><strong>R3:</strong></p>
+<pre tabindex="0"><code>R3(config)# interface GigabitEthernet0/0
+R3(config-if)# ip address 10.1.2.2 255.255.255.252
+R3(config-if)# no shutdown
+
+R3(config)# interface GigabitEthernet0/1
+R3(config-if)# ip address 192.168.3.1 255.255.255.0
+R3(config-if)# no shutdown
+
+! OSPF Configuration
+R3(config)# router ospf 1
+R3(config-router)# router-id 3.3.3.3
+R3(config-router)# network 10.1.2.0 0.0.0.3 area 0
+R3(config-router)# network 192.168.3.0 0.0.0.255 area 0
+R3(config-router)# passive-interface GigabitEthernet0/1
+</code></pre><h3 id="verify-ospf">Verify OSPF</h3>
+<pre tabindex="0"><code>R1# show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2         1     FULL/  -        00:00:35    10.1.1.2        Gi0/1
+</code></pre><pre tabindex="0"><code>R1# show ip route ospf
+
+O    10.1.2.0/30 [110/2] via 10.1.1.2, 00:05:23, GigabitEthernet0/1
+O    192.168.3.0/24 [110/3] via 10.1.1.2, 00:05:23, GigabitEthernet0/1
+</code></pre><pre tabindex="0"><code>R2# show ip ospf interface brief
+
+Interface    PID   Area  IP Address/Mask    Cost  State Nbrs F/C
+Gi0/0        1     0     10.1.1.2/30        1     P2P   1/1
+Gi0/1        1     0     10.1.2.1/30        1     P2P   1/1
+</code></pre><h3 id="test-convergence">Test Convergence</h3>
+<ol>
+<li>
+<p>Shutdown R1-R2 link:</p>
+<pre tabindex="0"><code>R1(config)# interface GigabitEthernet0/1
+R1(config-if)# shutdown
+</code></pre></li>
+<li>
+<p>Watch routing table update on R3:</p>
+<pre tabindex="0"><code>R3# show ip route
+</code></pre></li>
+<li>
+<p>Re-enable interface and observe convergence</p>
+</li>
+</ol>
+<h2 id="lab-5-dhcp-server-configuration">Lab 5: DHCP Server Configuration</h2>
+<h3 id="topology-4">Topology</h3>
+<pre tabindex="0"><code>    PC1
+     |
+    R1 (DHCP Server)
+     |
+    PC2
+</code></pre><h3 id="r1-dhcp-configuration">R1 DHCP Configuration</h3>
+<pre tabindex="0"><code>R1(config)# ip dhcp excluded-address 192.168.1.1 192.168.1.10
+R1(config)# ip dhcp excluded-address 192.168.1.250 192.168.1.254
+
+R1(config)# ip dhcp pool LAN-POOL
+R1(dhcp-config)# network 192.168.1.0 255.255.255.0
+R1(dhcp-config)# default-router 192.168.1.1
+R1(dhcp-config)# dns-server 8.8.8.8 8.8.4.4
+R1(dhcp-config)# domain-name example.com
+R1(dhcp-config)# lease 7
+R1(dhcp-config)# exit
+
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ip address 192.168.1.1 255.255.255.0
+R1(config-if)# no shutdown
+</code></pre><h3 id="configure-pcs-for-dhcp">Configure PCs for DHCP</h3>
+<p>On PC1 and PC2:</p>
+<ol>
+<li>Click on PC</li>
+<li>Desktop tab → IP Configuration</li>
+<li>Select <strong>DHCP</strong> (instead of Static)</li>
+<li>Click &ldquo;Renew&rdquo;</li>
+</ol>
+<h3 id="verify-2">Verify</h3>
+<pre tabindex="0"><code>R1# show ip dhcp binding
+
+IP address       Client-ID/              Lease expiration        Type
+                 Hardware address
+192.168.1.11     0001.9633.7A01          Dec 06 2023 12:00 AM    Automatic
+192.168.1.12     0060.5C4D.7902          Dec 06 2023 12:00 AM    Automatic
+</code></pre><pre tabindex="0"><code>R1# show ip dhcp pool
+
+Pool LAN-POOL :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 2
+ Excluded addresses             : 15
+ Pending event                  : none
+</code></pre><h2 id="lab-6-access-control-lists-acls">Lab 6: Access Control Lists (ACLs)</h2>
+<h3 id="scenario">Scenario</h3>
+<p>Block PC1 from accessing Web Server, nhưng cho phép PC2.</p>
+<h3 id="topology-5">Topology</h3>
+<pre tabindex="0"><code>PC1 (192.168.1.10)
+ |
+R1
+ |
+PC2 (192.168.1.20)
+ |
+Web Server (192.168.2.10)
+</code></pre><h3 id="standard-acl-configuration">Standard ACL Configuration</h3>
+<pre tabindex="0"><code>! Create ACL (block PC1, permit others)
+R1(config)# access-list 10 deny host 192.168.1.10
+R1(config)# access-list 10 permit any
+
+! Apply to interface (outbound towards server)
+R1(config)# interface GigabitEthernet0/1
+R1(config-if)# ip access-group 10 out
+</code></pre><h3 id="extended-acl-example">Extended ACL Example</h3>
+<pre tabindex="0"><code>! Block PC1 from HTTP/HTTPS to Web Server
+R1(config)# ip access-list extended BLOCK-WEB
+R1(config-ext-nacl)# deny tcp host 192.168.1.10 host 192.168.2.10 eq 80
+R1(config-ext-nacl)# deny tcp host 192.168.1.10 host 192.168.2.10 eq 443
+R1(config-ext-nacl)# permit ip any any
+R1(config-ext-nacl)# exit
+
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ip access-group BLOCK-WEB in
+</code></pre><h3 id="verify-3">Verify</h3>
+<pre tabindex="0"><code>R1# show access-lists
+R1# show ip interface GigabitEthernet0/0 | include access list
+</code></pre><h3 id="test-2">Test</h3>
+<p>From PC1:</p>
+<pre tabindex="0"><code>C:\&gt; ping 192.168.2.10    (Should fail with ACL)
+</code></pre><p>From PC2:</p>
+<pre tabindex="0"><code>C:\&gt; ping 192.168.2.10    (Should succeed)
+</code></pre><h2 id="lab-7-nat-configuration">Lab 7: NAT Configuration</h2>
+<h3 id="topology-6">Topology</h3>
+<pre tabindex="0"><code>Inside Network          Outside Network
+192.168.1.0/24          Internet (ISP)
+    PC1
+     |
+    R1 ───────── ISP Router
+</code></pre><h3 id="pat-port-address-translation">PAT (Port Address Translation)</h3>
+<pre tabindex="0"><code>! Define inside/outside interfaces
+R1(config)# interface GigabitEthernet0/0
+R1(config-if)# ip nat inside
+R1(config-if)# exit
+
+R1(config)# interface GigabitEthernet0/1
+R1(config-if)# ip nat outside
+R1(config-if)# exit
+
+! Create ACL for inside network
+R1(config)# access-list 1 permit 192.168.1.0 0.0.0.255
+
+! Configure PAT
+R1(config)# ip nat inside source list 1 interface GigabitEthernet0/1 overload
+</code></pre><h3 id="static-nat-server">Static NAT (Server)</h3>
+<pre tabindex="0"><code>! Map internal web server to public IP
+R1(config)# ip nat inside source static 192.168.1.100 209.165.200.225
+</code></pre><h3 id="verify-4">Verify</h3>
+<pre tabindex="0"><code>R1# show ip nat translations
+R1# show ip nat statistics
+</code></pre><h2 id="lab-8-troubleshooting-practice">Lab 8: Troubleshooting Practice</h2>
+<h3 id="broken-topology">Broken Topology</h3>
+<p>Create intentional errors và practice troubleshooting:</p>
+<p><strong>Common Issues:</strong></p>
+<ol>
+<li>Wrong IP address</li>
+<li>Wrong subnet mask</li>
+<li>Wrong default gateway</li>
+<li>Interface shutdown</li>
+<li>Wrong VLAN assignment</li>
+<li>Missing routes</li>
+<li>Wrong OSPF network statement</li>
+<li>Duplex mismatch</li>
+</ol>
+<h3 id="troubleshooting-commands">Troubleshooting Commands</h3>
+<pre tabindex="0"><code>! Layer 1 (Physical)
+show interfaces
+show controllers
+
+! Layer 2 (Data Link)
+show mac address-table
+show vlan
+show interfaces trunk
+show spanning-tree
+
+! Layer 3 (Network)
+show ip interface brief
+show ip route
+show ip protocols
+ping
+traceroute
+
+! OSPF Specific
+show ip ospf neighbor
+show ip ospf interface
+show ip ospf database
+
+! General
+show running-config
+show startup-config
+</code></pre><h3 id="systematic-approach">Systematic Approach</h3>
+<pre tabindex="0"><code>1. Identify the problem
+   - What doesn&#39;t work?
+   - What should work?
+
+2. Gather information
+   - Run show commands
+   - Check configs
+   - Test connectivity
+
+3. Analyze information
+   - Compare expected vs actual
+   - Identify discrepancies
+
+4. Propose solution
+   - What needs to change?
+
+5. Implement &amp; test
+   - Make changes
+   - Verify fix
+</code></pre><h2 id="advanced-labs">Advanced Labs</h2>
+<h3 id="lab-9-multi-area-ospf">Lab 9: Multi-Area OSPF</h3>
+<pre tabindex="0"><code>Area 1 ──── ABR ──── Area 0 ──── ABR ──── Area 2
+</code></pre><p><strong>Practice:</strong></p>
+<ul>
+<li>Configure multiple areas</li>
+<li>Understand LSA propagation</li>
+<li>Route summarization</li>
+<li>Stub areas</li>
+</ul>
+<h3 id="lab-10-etherchannel">Lab 10: EtherChannel</h3>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Aggregate multiple links</li>
+<li>Configure LACP/PAgP</li>
+<li>Load balancing</li>
+</ul>
+<h3 id="lab-11-stp-spanning-tree-protocol">Lab 11: STP (Spanning Tree Protocol)</h3>
+<p><strong>Practice:</strong></p>
+<ul>
+<li>Root bridge election</li>
+<li>Port states</li>
+<li>PortFast, BPDU Guard</li>
+<li>Rapid PVST+</li>
+</ul>
+<h2 id="tips-for-packet-tracer-success">Tips for Packet Tracer Success</h2>
+<h3 id="1-save-often">1. Save Often!</h3>
+<pre tabindex="0"><code>File → Save (Ctrl+S)
+Save As → Use descriptive names
+</code></pre><h3 id="2-use-simulation-mode">2. Use Simulation Mode</h3>
+<ul>
+<li>Click &ldquo;Simulation&rdquo; tab (bottom right)</li>
+<li>Step through packets</li>
+<li>Understand packet flow</li>
+</ul>
+<h3 id="3-label-everything">3. Label Everything</h3>
+<ul>
+<li>Double-click devices to rename</li>
+<li>Add text notes</li>
+<li>Document IP schemes</li>
+</ul>
+<h3 id="4-test-incrementally">4. Test Incrementally</h3>
+<ul>
+<li>Configure one thing at a time</li>
+<li>Test after each change</li>
+<li>Don&rsquo;t wait until end</li>
+</ul>
+<h3 id="5-learn-shortcuts">5. Learn Shortcuts</h3>
+<pre tabindex="0"><code>Ctrl+Z = Undo
+Ctrl+Y = Redo
+Delete = Remove device
+Ctrl+D = Duplicate
+</code></pre><h2 id="practice-projects">Practice Projects</h2>
+<h3 id="project-1-small-office-network">Project 1: Small Office Network</h3>
+<p>Design cho company với:</p>
+<ul>
+<li>3 departments (VLANs)</li>
+<li>Internet access (NAT)</li>
+<li>DHCP for clients</li>
+<li>Security (ACLs)</li>
+</ul>
+<h3 id="project-2-branch-office-connection">Project 2: Branch Office Connection</h3>
+<ul>
+<li>2 sites connected via WAN</li>
+<li>OSPF routing</li>
+<li>Inter-site VLANs</li>
+<li>Redundancy</li>
+</ul>
+<h3 id="project-3-isp-simulation">Project 3: ISP Simulation</h3>
+<ul>
+<li>Multiple customers</li>
+<li>BGP routing (if available)</li>
+<li>Different routing protocols</li>
+<li>NAT, ACLs</li>
+</ul>
+<h2 id="kết-luận">Kết luận</h2>
+<p>Packet Tracer là công cụ tuyệt vời để:</p>
+<p>✅ <strong>Practice</strong> cấu hình Cisco devices<br>
+✅ <strong>Visualize</strong> network behavior<br>
+✅ <strong>Experiment</strong> without real equipment<br>
+✅ <strong>Prepare</strong> for CCNA exam<br>
+✅ <strong>Build</strong> portfolio projects</p>
+<h3 id="tiếp-tục-học-tập">Tiếp tục học tập</h3>
+<ol>
+<li><strong>Complete Cisco NetAcad courses</strong></li>
+<li><strong>Join Packet Tracer communities</strong></li>
+<li><strong>Download lab files</strong> từ forums</li>
+<li><strong>Create your own</strong> scenarios</li>
+<li><strong>Move to GNS3/EVE-NG</strong> cho advanced practice</li>
+</ol>
+<h3 id="next-steps">Next Steps</h3>
+<ul>
+<li>📚 Study for CCNA exam</li>
+<li>💻 Practice trên real equipment</li>
+<li>🔧 Learn network automation</li>
+<li>🌐 Explore SD-WAN, cloud networking</li>
+<li>🎓 Pursue CCNP certification</li>
+</ul>
+<h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo</h2>
+<ul>
+<li>Cisco Packet Tracer Official Site</li>
+<li>CCNA 200-301 Official Cert Guide</li>
+<li>Packet Tracer Network Academy Labs</li>
+<li>Reddit: r/ccna, r/networking</li>
+<li>YouTube: NetworkChuck, David Bombal, Jeremy&rsquo;s IT Lab</li>
+</ul>
+<hr>
+<p><strong>Chúc bạn thành công trong hành trình networking! 🚀</strong></p>
+<p><em>Practice, practice, practice! Đó là chìa khóa để master networking!</em></p>
+<hr>
+<h2 id="liên-hệ">Liên hệ</h2>
+<p>Nếu có câu hỏi hoặc cần support, hãy liên hệ qua <a href="/contact">trang Contact</a> nhé!</p>
+<p><strong>Đào Văn Thắng</strong><br>
+Sinh viên CNPM - HUTECH<br>
+Network &amp; Programming Enthusiast</p>
+
+  
+  <div>
+    <div>Tags:</div>
+    <ul>
+        <li><a href="/tags/packet-tracer/">Packet-Tracer</a></li>
+        <li><a href="/tags/cisco/">Cisco</a></li>
+        <li><a href="/tags/ccna/">Ccna</a></li>
+        <li><a href="/tags/lab/">Lab</a></li>
+        <li><a href="/tags/hands-on/">Hands-On</a></li>
+        <li><a href="/tags/practice/">Practice</a></li>
+    </ul>
+  </div>
+
+
+    </main>
+    
+    <p>Copyright 2025. All rights reserved.</p>
+
+    
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subnetting &amp; VLSM: Bí kíp chia mạng hiệu quả | NetCode Blog - Đào Văn Thắng</title>
+    <meta name="description" content="Blog chia sẻ kiến thức về Lập trình Mạng Máy tính và JavaScript">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body>
+    <h1>NetCode Blog - Đào Văn Thắng</h1>
+
+  <nav>
+    <ul>
+    <li>
+      <a href="/">Trang chủ</a>
+    </li>
+    <li>
+      <a href="/posts/">Bài viết</a>
+    </li>
+    <li>
+      <a href="/about/">Giới thiệu</a>
+    </li>
+    <li>
+      <a href="/certificates/">Chứng chỉ</a>
+    </li>
+    <li>
+      <a href="/contact/">Liên hệ</a>
+    </li>
+    </ul>
+  </nav>
+
+
+    
+    <main>
+        
+  <h1>Subnetting &amp; VLSM: Bí kíp chia mạng hiệu quả</h1>
+
+  
+  
+  <time datetime="2023-11-01T00:00:00&#43;00:00">November 1, 2023</time>
+
+  <h2 id="giới-thiệu">Giới thiệu</h2>
+<p>Subnetting là kỹ năng quan trọng nhất mà một network engineer cần có. Nó giúp:</p>
+<ul>
+<li><strong>Tối ưu hóa</strong> việc sử dụng IP addresses</li>
+<li><strong>Tăng bảo mật</strong> bằng cách chia nhỏ broadcast domains</li>
+<li><strong>Cải thiện hiệu suất</strong> mạng</li>
+<li><strong>Quản lý</strong> địa chỉ IP hiệu quả hơn</li>
+</ul>
+<h2 id="ip-address-structure">IP Address Structure</h2>
+<h3 id="ipv4-address-format">IPv4 Address Format</h3>
+<p>Một địa chỉ IPv4 có <strong>32 bits</strong>, chia làm 4 octets:</p>
+<pre tabindex="0"><code>192.168.1.100
+ |   |   |  |
+ 8   8   8  8  bits
+
+Binary: 11000000.10101000.00000001.01100100
+</code></pre><h3 id="các-lớp-ip-classful-addressing">Các lớp IP (Classful Addressing)</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Class</th>
+          <th>Range</th>
+          <th>Default Mask</th>
+          <th>CIDR</th>
+          <th>Hosts</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>A</td>
+          <td>1.0.0.0 - 126.255.255.255</td>
+          <td>255.0.0.0</td>
+          <td>/8</td>
+          <td>16,777,214</td>
+      </tr>
+      <tr>
+          <td>B</td>
+          <td>128.0.0.0 - 191.255.255.255</td>
+          <td>255.255.0.0</td>
+          <td>/16</td>
+          <td>65,534</td>
+      </tr>
+      <tr>
+          <td>C</td>
+          <td>192.0.0.0 - 223.255.255.255</td>
+          <td>255.255.255.0</td>
+          <td>/24</td>
+          <td>254</td>
+      </tr>
+      <tr>
+          <td>D</td>
+          <td>224.0.0.0 - 239.255.255.255</td>
+          <td>-</td>
+          <td>-</td>
+          <td>Multicast</td>
+      </tr>
+      <tr>
+          <td>E</td>
+          <td>240.0.0.0 - 255.255.255.255</td>
+          <td>-</td>
+          <td>-</td>
+          <td>Reserved</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="private-ip-ranges">Private IP Ranges</h3>
+<pre tabindex="0"><code>Class A: 10.0.0.0/8        (10.0.0.0 - 10.255.255.255)
+Class B: 172.16.0.0/12     (172.16.0.0 - 172.31.255.255)
+Class C: 192.168.0.0/16    (192.168.0.0 - 192.168.255.255)
+</code></pre><h2 id="subnet-mask">Subnet Mask</h2>
+<h3 id="subnet-mask-là-gì">Subnet Mask là gì?</h3>
+<p>Subnet mask xác định phần nào của IP address là <strong>Network</strong> và phần nào là <strong>Host</strong>.</p>
+<pre tabindex="0"><code>IP Address:    192.168.1.100
+Subnet Mask:   255.255.255.0
+
+Binary:
+IP:     11000000.10101000.00000001.01100100
+Mask:   11111111.11111111.11111111.00000000
+        [---- Network ----][- Host -]
+</code></pre><h3 id="cidr-notation">CIDR Notation</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Subnet Mask</th>
+          <th>CIDR</th>
+          <th>Binary Representation</th>
+          <th>Usable Hosts</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>255.255.255.255</td>
+          <td>/32</td>
+          <td>11111111.11111111.11111111.11111111</td>
+          <td>0</td>
+      </tr>
+      <tr>
+          <td>255.255.255.254</td>
+          <td>/31</td>
+          <td>11111111.11111111.11111111.11111110</td>
+          <td>0 (P2P)</td>
+      </tr>
+      <tr>
+          <td>255.255.255.252</td>
+          <td>/30</td>
+          <td>11111111.11111111.11111111.11111100</td>
+          <td>2</td>
+      </tr>
+      <tr>
+          <td>255.255.255.248</td>
+          <td>/29</td>
+          <td>11111111.11111111.11111111.11111000</td>
+          <td>6</td>
+      </tr>
+      <tr>
+          <td>255.255.255.240</td>
+          <td>/28</td>
+          <td>11111111.11111111.11111111.11110000</td>
+          <td>14</td>
+      </tr>
+      <tr>
+          <td>255.255.255.224</td>
+          <td>/27</td>
+          <td>11111111.11111111.11111111.11100000</td>
+          <td>30</td>
+      </tr>
+      <tr>
+          <td>255.255.255.192</td>
+          <td>/26</td>
+          <td>11111111.11111111.11111111.11000000</td>
+          <td>62</td>
+      </tr>
+      <tr>
+          <td>255.255.255.128</td>
+          <td>/25</td>
+          <td>11111111.11111111.11111111.10000000</td>
+          <td>126</td>
+      </tr>
+      <tr>
+          <td>255.255.255.0</td>
+          <td>/24</td>
+          <td>11111111.11111111.11111111.00000000</td>
+          <td>254</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="công-thức-subnetting">Công thức Subnetting</h2>
+<h3 id="1-số-subnets">1. Số Subnets</h3>
+<pre tabindex="0"><code>Number of Subnets = 2^n
+(n = số bits mượn từ host portion)
+</code></pre><h3 id="2-số-hosts-per-subnet">2. Số Hosts per Subnet</h3>
+<pre tabindex="0"><code>Number of Hosts = 2^h - 2
+(h = số bits còn lại cho host, -2 cho Network và Broadcast)
+</code></pre><h3 id="3-block-size">3. Block Size</h3>
+<pre tabindex="0"><code>Block Size = 256 - Subnet Mask Value (trong octet interesting)
+</code></pre><h2 id="bài-toán-subnetting-cơ-bản">Bài toán Subnetting cơ bản</h2>
+<h3 id="ví-dụ-1-chia-mạng-24-thành-4-subnets">Ví dụ 1: Chia mạng /24 thành 4 subnets</h3>
+<p><strong>Đề bài:</strong> Chia 192.168.1.0/24 thành 4 subnets bằng nhau.</p>
+<p><strong>Giải:</strong></p>
+<ol>
+<li>
+<p><strong>Xác định số bits cần mượn:</strong></p>
+<ul>
+<li>Cần 4 subnets → 2^n ≥ 4 → n = 2 bits</li>
+<li>New mask: /24 + 2 = /26</li>
+</ul>
+</li>
+<li>
+<p><strong>Tính số hosts per subnet:</strong></p>
+<ul>
+<li>Host bits còn lại: 32 - 26 = 6 bits</li>
+<li>Hosts = 2^6 - 2 = 62 hosts</li>
+</ul>
+</li>
+<li>
+<p><strong>Tính block size:</strong></p>
+<ul>
+<li>Block size = 256 - 192 = 64</li>
+<li>(192 là giá trị của octet thứ 4 trong mask 255.255.255.192)</li>
+</ul>
+</li>
+<li>
+<p><strong>Liệt kê các subnets:</strong></p>
+</li>
+</ol>
+<table>
+  <thead>
+      <tr>
+          <th>Subnet</th>
+          <th>Network</th>
+          <th>First Host</th>
+          <th>Last Host</th>
+          <th>Broadcast</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>192.168.1.0/26</td>
+          <td>192.168.1.1</td>
+          <td>192.168.1.62</td>
+          <td>192.168.1.63</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>192.168.1.64/26</td>
+          <td>192.168.1.65</td>
+          <td>192.168.1.126</td>
+          <td>192.168.1.127</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>192.168.1.128/26</td>
+          <td>192.168.1.129</td>
+          <td>192.168.1.190</td>
+          <td>192.168.1.191</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>192.168.1.192/26</td>
+          <td>192.168.1.193</td>
+          <td>192.168.1.254</td>
+          <td>192.168.1.255</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="ví-dụ-2-thiết-kế-mạng-cho-công-ty">Ví dụ 2: Thiết kế mạng cho công ty</h3>
+<p><strong>Đề bài:</strong> Công ty có 4 phòng ban:</p>
+<ul>
+<li>Sales: 50 users</li>
+<li>IT: 25 users</li>
+<li>HR: 10 users</li>
+<li>Management: 5 users</li>
+</ul>
+<p>Được cấp mạng: <strong>192.168.10.0/24</strong></p>
+<p><strong>Giải theo VLSM:</strong></p>
+<ol>
+<li>
+<p><strong>Sắp xếp theo thứ tự từ lớn đến nhỏ:</strong></p>
+<ul>
+<li>Sales: 50 hosts → cần /26 (62 hosts)</li>
+<li>IT: 25 hosts → cần /27 (30 hosts)</li>
+<li>HR: 10 hosts → cần /28 (14 hosts)</li>
+<li>Management: 5 hosts → cần /29 (6 hosts)</li>
+</ul>
+</li>
+<li>
+<p><strong>Phân bổ subnets:</strong></p>
+</li>
+</ol>
+<p><strong>Sales Department (50 hosts):</strong></p>
+<pre tabindex="0"><code>Network:    192.168.10.0/26
+First Host: 192.168.10.1
+Last Host:  192.168.10.62
+Broadcast:  192.168.10.63
+</code></pre><p><strong>IT Department (25 hosts):</strong></p>
+<pre tabindex="0"><code>Network:    192.168.10.64/27
+First Host: 192.168.10.65
+Last Host:  192.168.10.94
+Broadcast:  192.168.10.95
+</code></pre><p><strong>HR Department (10 hosts):</strong></p>
+<pre tabindex="0"><code>Network:    192.168.10.96/28
+First Host: 192.168.10.97
+Last Host:  192.168.10.110
+Broadcast:  192.168.10.111
+</code></pre><p><strong>Management (5 hosts):</strong></p>
+<pre tabindex="0"><code>Network:    192.168.10.112/29
+First Host: 192.168.10.113
+Last Host:  192.168.10.118
+Broadcast:  192.168.10.119
+</code></pre><p><strong>Còn lại:</strong> 192.168.10.120 - 192.168.10.255 (dự phòng)</p>
+<h2 id="vlsm-variable-length-subnet-masking">VLSM (Variable Length Subnet Masking)</h2>
+<p>VLSM cho phép sử dụng subnet masks khác nhau trong cùng một mạng.</p>
+<h3 id="ưu-điểm-của-vlsm">Ưu điểm của VLSM</h3>
+<ol>
+<li><strong>Tiết kiệm địa chỉ IP</strong></li>
+<li><strong>Linh hoạt</strong> trong thiết kế</li>
+<li><strong>Tối ưu</strong> cho các mạng có kích thước khác nhau</li>
+<li><strong>Giảm lãng phí</strong> IP addresses</li>
+</ol>
+<h3 id="quy-trình-vlsm">Quy trình VLSM</h3>
+<pre tabindex="0"><code>1. Liệt kê yêu cầu (từ lớn → nhỏ)
+2. Xác định subnet mask phù hợp cho mỗi yêu cầu
+3. Phân bổ subnets theo thứ tự
+4. Verify không bị overlap
+</code></pre><h3 id="ví-dụ-vlsm-phức-tạp">Ví dụ VLSM phức tạp</h3>
+<p><strong>Đề bài:</strong> Thiết kế mạng cho 1 chi nhánh công ty với:</p>
+<ul>
+<li>LAN 1: 120 users</li>
+<li>LAN 2: 60 users</li>
+<li>LAN 3: 28 users</li>
+<li>LAN 4: 12 users</li>
+<li>3 Point-to-Point links (router connections)</li>
+</ul>
+<p><strong>Được cấp:</strong> 172.16.50.0/23</p>
+<p><strong>Giải:</strong></p>
+<ol>
+<li>
+<p><strong>Sắp xếp yêu cầu:</strong></p>
+<ul>
+<li>LAN 1: 120 hosts → /25 (126 hosts)</li>
+<li>LAN 2: 60 hosts → /26 (62 hosts)</li>
+<li>LAN 3: 28 hosts → /27 (30 hosts)</li>
+<li>LAN 4: 12 hosts → /28 (14 hosts)</li>
+<li>P2P Link 1, 2, 3: 2 hosts each → /30 (2 hosts)</li>
+</ul>
+</li>
+<li>
+<p><strong>Phân bổ:</strong></p>
+</li>
+</ol>
+<pre tabindex="0"><code>LAN 1: 172.16.50.0/25
+  Network:   172.16.50.0
+  First:     172.16.50.1
+  Last:      172.16.50.126
+  Broadcast: 172.16.50.127
+
+LAN 2: 172.16.50.128/26
+  Network:   172.16.50.128
+  First:     172.16.50.129
+  Last:      172.16.50.190
+  Broadcast: 172.16.50.191
+
+LAN 3: 172.16.50.192/27
+  Network:   172.16.50.192
+  First:     172.16.50.193
+  Last:      172.16.50.222
+  Broadcast: 172.16.50.223
+
+LAN 4: 172.16.50.224/28
+  Network:   172.16.50.224
+  First:     172.16.50.225
+  Last:      172.16.50.238
+  Broadcast: 172.16.50.239
+
+P2P Link 1: 172.16.50.240/30
+  Network:   172.16.50.240
+  First:     172.16.50.241
+  Last:      172.16.50.242
+  Broadcast: 172.16.50.243
+
+P2P Link 2: 172.16.50.244/30
+  Network:   172.16.50.244
+  First:     172.16.50.245
+  Last:      172.16.50.246
+  Broadcast: 172.16.50.247
+
+P2P Link 3: 172.16.50.248/30
+  Network:   172.16.50.248
+  First:     172.16.50.249
+  Last:      172.16.50.250
+  Broadcast: 172.16.50.251
+</code></pre><h2 id="route-summarization-supernetting">Route Summarization (Supernetting)</h2>
+<h3 id="tóm-tắt-routes-để-giảm-routing-table">Tóm tắt routes để giảm routing table</h3>
+<p><strong>Ví dụ:</strong> Tóm tắt các networks sau:</p>
+<pre tabindex="0"><code>192.168.0.0/24
+192.168.1.0/24
+192.168.2.0/24
+192.168.3.0/24
+</code></pre><p><strong>Cách làm:</strong></p>
+<ol>
+<li><strong>Chuyển sang binary:</strong></li>
+</ol>
+<pre tabindex="0"><code>192.168.0.0   = 11000000.10101000.00000000.00000000
+192.168.1.0   = 11000000.10101000.00000001.00000000
+192.168.2.0   = 11000000.10101000.00000010.00000000
+192.168.3.0   = 11000000.10101000.00000011.00000000
+</code></pre><ol start="2">
+<li><strong>Tìm common bits:</strong></li>
+</ol>
+<pre tabindex="0"><code>Common: 11000000.10101000.000000
+                               ^ khác nhau từ bit này
+</code></pre><ol start="3">
+<li><strong>Summary route:</strong></li>
+</ol>
+<pre tabindex="0"><code>192.168.0.0/22
+(22 bits giống nhau)
+</code></pre><p><strong>Verify:</strong> 192.168.0.0/22 cover từ 192.168.0.0 → 192.168.3.255 ✓</p>
+<h2 id="python-script-subnet-calculator">Python Script: Subnet Calculator</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> ipaddress
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">subnet_calculator</span>(network, num_subnets<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>, hosts_per_subnet<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Tính toán subnets
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        net <span style="color:#f92672">=</span> ipaddress<span style="color:#f92672">.</span>ip_network(network, strict<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;=&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Original Network: </span><span style="color:#e6db74">{</span>net<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Netmask: </span><span style="color:#e6db74">{</span>net<span style="color:#f92672">.</span>netmask<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Wildcard: </span><span style="color:#e6db74">{</span>net<span style="color:#f92672">.</span>hostmask<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Total Addresses: </span><span style="color:#e6db74">{</span>net<span style="color:#f92672">.</span>num_addresses<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Usable Hosts: </span><span style="color:#e6db74">{</span>net<span style="color:#f92672">.</span>num_addresses <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;=&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> num_subnets:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Tính new prefix length</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">import</span> math
+</span></span><span style="display:flex;"><span>            bits_needed <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>ceil(math<span style="color:#f92672">.</span>log2(num_subnets))
+</span></span><span style="display:flex;"><span>            new_prefix <span style="color:#f92672">=</span> net<span style="color:#f92672">.</span>prefixlen <span style="color:#f92672">+</span> bits_needed
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> new_prefix <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">32</span>:
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">&#34;Error: Cannot create that many subnets&#34;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            subnets <span style="color:#f92672">=</span> list(net<span style="color:#f92672">.</span>subnets(new_prefix<span style="color:#f92672">=</span>new_prefix))
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Creating </span><span style="color:#e6db74">{</span>len(subnets)<span style="color:#e6db74">}</span><span style="color:#e6db74"> subnets with /</span><span style="color:#e6db74">{</span>new_prefix<span style="color:#e6db74">}</span><span style="color:#e6db74">:&#34;</span>)
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Hosts per subnet: </span><span style="color:#e6db74">{</span>subnets[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>num_addresses <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span><span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i, subnet <span style="color:#f92672">in</span> enumerate(subnets, <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>                hosts <span style="color:#f92672">=</span> list(subnet<span style="color:#f92672">.</span>hosts())
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Subnet </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">: </span><span style="color:#e6db74">{</span>subnet<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  Network:   </span><span style="color:#e6db74">{</span>subnet<span style="color:#f92672">.</span>network_address<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> hosts:
+</span></span><span style="display:flex;"><span>                    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  First Host: </span><span style="color:#e6db74">{</span>hosts[<span style="color:#ae81ff">0</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>                    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  Last Host:  </span><span style="color:#e6db74">{</span>hosts[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  Broadcast: </span><span style="color:#e6db74">{</span>subnet<span style="color:#f92672">.</span>broadcast_address<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>                print()
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">ValueError</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Error: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">vlsm_calculator</span>(network, requirements):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    VLSM Calculator
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    requirements = [(name, num_hosts), ...]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        net <span style="color:#f92672">=</span> ipaddress<span style="color:#f92672">.</span>ip_network(network, strict<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>        available_ip <span style="color:#f92672">=</span> net<span style="color:#f92672">.</span>network_address
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">VLSM Design for </span><span style="color:#e6db74">{</span>net<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;=&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">70</span><span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Sort by hosts (largest first)</span>
+</span></span><span style="display:flex;"><span>        requirements<span style="color:#f92672">.</span>sort(key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x[<span style="color:#ae81ff">1</span>], reverse<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> name, num_hosts <span style="color:#f92672">in</span> requirements:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Calculate required hosts (including network and broadcast)</span>
+</span></span><span style="display:flex;"><span>            required <span style="color:#f92672">=</span> num_hosts <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Find minimum prefix length</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">import</span> math
+</span></span><span style="display:flex;"><span>            host_bits <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>ceil(math<span style="color:#f92672">.</span>log2(required))
+</span></span><span style="display:flex;"><span>            prefix_len <span style="color:#f92672">=</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">-</span> host_bits
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Create subnet</span>
+</span></span><span style="display:flex;"><span>            subnet_str <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>available_ip<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>prefix_len<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>            subnet <span style="color:#f92672">=</span> ipaddress<span style="color:#f92672">.</span>ip_network(subnet_str, strict<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>            hosts <span style="color:#f92672">=</span> list(subnet<span style="color:#f92672">.</span>hosts())
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74"> (</span><span style="color:#e6db74">{</span>num_hosts<span style="color:#e6db74">}</span><span style="color:#e6db74"> hosts) - </span><span style="color:#e6db74">{</span>subnet<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  Network:    </span><span style="color:#e6db74">{</span>subnet<span style="color:#f92672">.</span>network_address<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> hosts:
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  First Host: </span><span style="color:#e6db74">{</span>hosts[<span style="color:#ae81ff">0</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  Last Host:  </span><span style="color:#e6db74">{</span>hosts[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  Broadcast:  </span><span style="color:#e6db74">{</span>subnet<span style="color:#f92672">.</span>broadcast_address<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;  Usable:     </span><span style="color:#e6db74">{</span>len(hosts)<span style="color:#e6db74">}</span><span style="color:#e6db74"> hosts&#34;</span>)
+</span></span><span style="display:flex;"><span>            print()
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Update available IP to next subnet</span>
+</span></span><span style="display:flex;"><span>            available_ip <span style="color:#f92672">=</span> subnet<span style="color:#f92672">.</span>broadcast_address <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Error: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Ví dụ sử dụng</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Subnetting</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;EXAMPLE 1: Basic Subnetting&#34;</span>)
+</span></span><span style="display:flex;"><span>    subnet_calculator(<span style="color:#e6db74">&#34;192.168.1.0/24&#34;</span>, num_subnets<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;=&#34;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">70</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># VLSM</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;EXAMPLE 2: VLSM Design&#34;</span>)
+</span></span><span style="display:flex;"><span>    requirements <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;Sales&#34;</span>, <span style="color:#ae81ff">50</span>),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;IT&#34;</span>, <span style="color:#ae81ff">25</span>),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;HR&#34;</span>, <span style="color:#ae81ff">10</span>),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;Management&#34;</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>    vlsm_calculator(<span style="color:#e6db74">&#34;192.168.10.0/24&#34;</span>, requirements)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="tips--tricks">Tips &amp; Tricks</h2>
+<h3 id="1-nhớ-block-sizes">1. Nhớ Block Sizes</h3>
+<pre tabindex="0"><code>/30 → Block 4   (2 hosts)   [P2P links]
+/29 → Block 8   (6 hosts)
+/28 → Block 16  (14 hosts)
+/27 → Block 32  (30 hosts)
+/26 → Block 64  (62 hosts)
+/25 → Block 128 (126 hosts)
+/24 → Block 256 (254 hosts)
+</code></pre><h3 id="2-quick-check">2. Quick Check</h3>
+<p><strong>Is IP in subnet?</strong></p>
+<pre tabindex="0"><code>Network: 192.168.10.64/27
+Check: 192.168.10.75
+
+Block size = 32
+64 + 32 = 96
+→ Subnet range: 64-95
+→ 75 is IN the subnet ✓
+</code></pre><h3 id="3-wildcard-mask">3. Wildcard Mask</h3>
+<pre tabindex="0"><code>Wildcard = 255.255.255.255 - Subnet Mask
+
+Example:
+Subnet Mask: 255.255.255.192
+Wildcard:    0.0.0.63
+</code></pre><h2 id="bài-tập-thực-hành">Bài tập thực hành</h2>
+<h3 id="bài-1">Bài 1</h3>
+<p>Chia 10.0.0.0/8 thành 8 subnets bằng nhau. Tính:</p>
+<ul>
+<li>New subnet mask</li>
+<li>Hosts per subnet</li>
+<li>Liệt kê 3 subnets đầu tiên</li>
+</ul>
+<h3 id="bài-2">Bài 2</h3>
+<p>Thiết kế VLSM cho mạng 172.20.0.0/22:</p>
+<ul>
+<li>Building A: 400 users</li>
+<li>Building B: 200 users</li>
+<li>Building C: 100 users</li>
+<li>Server Farm: 50 servers</li>
+<li>5 P2P links</li>
+</ul>
+<h3 id="bài-3">Bài 3</h3>
+<p>Tóm tắt (summarize) các routes:</p>
+<pre tabindex="0"><code>192.168.16.0/24
+192.168.17.0/24
+192.168.18.0/24
+192.168.19.0/24
+192.168.20.0/24
+192.168.21.0/24
+192.168.22.0/24
+192.168.23.0/24
+</code></pre><h2 id="kết-luận">Kết luận</h2>
+<p>Subnetting và VLSM là nền tảng của network design. Master những kỹ năng này sẽ giúp bạn:</p>
+<ul>
+<li>Thiết kế mạng hiệu quả</li>
+<li>Tối ưu IP addressing</li>
+<li>Hiểu sâu về routing</li>
+<li>Vượt qua CCNA exam!</li>
+</ul>
+<p>Trong bài tiếp theo, chúng ta sẽ học về <strong>OSPF Routing Protocol</strong> - dynamic routing trong thực tế!</p>
+<h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo</h2>
+<ul>
+<li>RFC 1519 - CIDR</li>
+<li>RFC 1918 - Private Address Space</li>
+<li>Cisco CCNA Official Cert Guide</li>
+<li>IPv4 Subnetting Practice (subnettingpractice.com)</li>
+</ul>
+<hr>
+<p><em>Luyện tập mỗi ngày để thành thạo subnetting!</em></p>
+
+  
+  <div>
+    <div>Tags:</div>
+    <ul>
+        <li><a href="/tags/subnetting/">Subnetting</a></li>
+        <li><a href="/tags/vlsm/">Vlsm</a></li>
+        <li><a href="/tags/ip-addressing/">Ip-Addressing</a></li>
+        <li><a href="/tags/networking/">Networking</a></li>
+        <li><a href="/tags/ccna/">Ccna</a></li>
+    </ul>
+  </div>
+
+
+    </main>
+    
+    <p>Copyright 2025. All rights reserved.</p>
+
+    
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

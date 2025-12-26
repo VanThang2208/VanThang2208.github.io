@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cisco on NetCode Blog - Đào Văn Thắng</title>
+    <link>https://vanthang2208.github.io/tags/cisco/</link>
+    <description>Recent content in Cisco on NetCode Blog - Đào Văn Thắng</description>
+    <generator>Hugo</generator>
+    <language>vi</language>
+    <lastBuildDate>Wed, 29 Nov 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://vanthang2208.github.io/tags/cisco/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cisco Packet Tracer Labs: Hands-on Practice từ cơ bản đến nâng cao</title>
+      <link>https://vanthang2208.github.io/posts/09-cisco-packet-tracer-labs/</link>
+      <pubDate>Wed, 29 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/09-cisco-packet-tracer-labs/</guid>
+      <description>Hướng dẫn từng bước thực hành trên Cisco Packet Tracer. Từ basic switching/routing đến complex multi-area OSPF và automation. Kèm file .pkt để download!</description>
+    </item>
+    <item>
+      <title>OSPF Routing Protocol: Dynamic Routing trong doanh nghiệp</title>
+      <link>https://vanthang2208.github.io/posts/06-ospf-routing-protocol/</link>
+      <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://vanthang2208.github.io/posts/06-ospf-routing-protocol/</guid>
+      <description>Tìm hiểu về OSPF - giao thức định tuyến động phổ biến nhất trong doanh nghiệp. Từ lý thuyết đến cấu hình thực tế trên Cisco routers.</description>
+    </item>
+  </channel>
+</rss>
