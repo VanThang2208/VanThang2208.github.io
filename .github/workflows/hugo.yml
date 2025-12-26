@@ -44,6 +44,9 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
+        with:
+          # Ensure Pages is enabled to build using GitHub Actions
+          enablement: github-actions
       
       - name: Build with Hugo
         working-directory: ./hugo-blog

@@ -131,6 +131,17 @@ git push origin main
 - Commit và push lại
 - Workflow sẽ tự động chạy lại
 
+#### Lỗi `Get Pages site failed` / `HttpError: Not Found`
+
+**Nguyên nhân:** GitHub Pages chưa được bật để xây dựng bằng GitHub Actions hoặc workflow không có cờ `enablement` để bật Pages tự động.
+
+**Giải pháp:**
+- Trong repository Settings → Pages, đảm bảo `Source` đang là **GitHub Actions** (nếu có thể).
+- Nếu workflow vẫn lỗi, mở file `.github/workflows/hugo.yml` và thêm cho step `actions/configure-pages@v4` phần `with:\n  enablement: github-actions` (đã được cập nhật trong workflow mẫu của repo).
+- Đảm bảo `permissions` trong workflow có `pages: write` và `id-token: write`.
+
+Sau khi sửa, commit và push để kích hoạt lại workflow.
+
 ### CSS không load
 
 **Nguyên nhân:**
