@@ -4,7 +4,7 @@ date: 2023-11-29
 draft: false
 category: "THỰC HÀNH"
 tags: ["packet-tracer", "cisco", "ccna", "lab", "hands-on", "practice"]
-image: "https://picsum.photos/seed/net9/600/400"
+image: "/images/post-09-cisco-packet-tracer-labs.png"
 summary: "Hướng dẫn từng bước thực hành trên Cisco Packet Tracer. Từ basic switching/routing đến complex multi-area OSPF và automation. Kèm file .pkt để download!"
 ---
 

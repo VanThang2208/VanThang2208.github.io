@@ -4,7 +4,7 @@ date: 2023-11-15
 draft: false
 category: "AUTOMATION"
 tags: ["python", "automation", "netmiko", "paramiko", "devnet", "scripting"]
-image: "https://picsum.photos/seed/net7/600/400"
+image: "/images/post-07-network-automation-python.png"
 summary: "Học cách tự động hóa các tác vụ mạng với Python. Sử dụng Netmiko, Paramiko để kết nối và cấu hình hàng loạt network devices một cách hiệu quả."
 ---
 

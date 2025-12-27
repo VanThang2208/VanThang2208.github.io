@@ -4,7 +4,7 @@ date: 2023-11-22
 draft: false
 category: "AUTOMATION"
 tags: ["rest-api", "restconf", "netconf", "api", "automation", "devnet"]
-image: "https://picsum.photos/seed/net8/600/400"
+image: "/images/post-08-rest-apis-restconf.png"
 summary: "Tìm hiểu về REST APIs, RESTCONF và cách sử dụng Python Requests để tương tác với modern network devices. Từ lý thuyết đến thực hành với Cisco devices."
 ---
 

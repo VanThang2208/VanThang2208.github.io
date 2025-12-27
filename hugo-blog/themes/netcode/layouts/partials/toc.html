@@ -1,0 +1,112 @@
+{{- /*
+Renders a Table of Contents (TOC) for blog posts
+Usage: {{ partial "toc.html" . }}
+*/}}
+
+{{- if and .TableOfContents (gt (len .TableOfContents) 100) }}
+<div class="toc-wrapper my-12">
+    <!-- Mobile TOC Toggle -->
+    <button id="toc-toggle" class="md:hidden w-full bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-xl p-4 flex items-center justify-between text-left hover:from-blue-100 hover:to-cyan-100 transition-all mb-4">
+        <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+            </svg>
+            <span class="font-bold text-gray-900">Mục lục bài viết</span>
+        </div>
+        <svg id="toc-icon" class="w-5 h-5 text-gray-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+    </button>
+
+    <!-- TOC Content -->
+    <nav id="toc-content" class="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-6 shadow-md hidden md:block">
+        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-blue-200">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+            </svg>
+            <h2 class="text-lg font-bold text-gray-900">Mục lục</h2>
+        </div>
+        <div class="toc-list prose prose-sm max-w-none
+                    prose-ul:list-none prose-ul:pl-0 prose-ul:space-y-1
+                    prose-li:my-0
+                    prose-a:text-gray-700 prose-a:no-underline prose-a:font-medium prose-a:py-2 prose-a:px-3 prose-a:block prose-a:rounded-lg
+                    hover:prose-a:bg-white hover:prose-a:text-blue-600 hover:prose-a:shadow-sm
+                    prose-a:transition-all">
+            {{ .TableOfContents }}
+        </div>
+    </nav>
+</div>
+
+<style>
+    /* Improve TOC styling */
+    #TableOfContents {
+        counter-reset: toc-counter;
+    }
+    
+    #TableOfContents > ul {
+        padding-left: 0 !important;
+    }
+    
+    #TableOfContents li {
+        counter-increment: toc-counter;
+        position: relative;
+    }
+    
+    #TableOfContents a {
+        display: block;
+        transition: all 0.2s;
+    }
+    
+    #TableOfContents a.active {
+        background: white;
+        color: #2563eb;
+        font-weight: 600;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    /* Nested lists */
+    #TableOfContents ul ul {
+        padding-left: 1.25rem !important;
+        margin-top: 0.25rem !important;
+    }
+</style>
+
+<script>
+    // Mobile TOC Toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const tocToggle = document.getElementById('toc-toggle');
+        const tocContent = document.getElementById('toc-content');
+        const tocIcon = document.getElementById('toc-icon');
+        
+        if (tocToggle && tocContent) {
+            tocToggle.addEventListener('click', function() {
+                tocContent.classList.toggle('hidden');
+                tocIcon.classList.toggle('rotate-180');
+            });
+        }
+        
+        // Active link highlighting on scroll
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                const tocLink = document.querySelector(`#TableOfContents a[href="#${id}"]`);
+                
+                if (tocLink) {
+                    if (entry.intersectionRatio > 0) {
+                        document.querySelectorAll('#TableOfContents a').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                        tocLink.classList.add('active');
+                    }
+                }
+            });
+        }, { rootMargin: '-100px 0px -66%' });
+        
+        // Track all headings
+        document.querySelectorAll('article h2[id], article h3[id]').forEach((section) => {
+            observer.observe(section);
+        });
+    });
+</script>
+{{- end }}
+

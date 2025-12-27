@@ -10,10 +10,11 @@ theme = 'netcode'
   major = 'Công Nghệ Phần Mềm'
   
   [params.social]
-    email = 'vanthang.network@gmail.com'
+    email = 'vanthang22082004@gmail.com'
+    phone = '0346977122'
     github = 'VanThang2208'
-    linkedin = ''
-    facebook = ''
+    linkedin = 'https://www.linkedin.com/in/thắng-đào-văn-a790803a3 '
+    facebook = 'https://www.facebook.com/van.thang.921291'
 
 [menu]
   [[menu.main]]

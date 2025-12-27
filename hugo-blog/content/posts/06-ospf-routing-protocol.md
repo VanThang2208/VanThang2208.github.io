@@ -4,7 +4,7 @@ date: 2023-11-08
 draft: false
 category: "NÂNG CAO"
 tags: ["ospf", "routing", "dynamic-routing", "ccna", "cisco"]
-image: "https://picsum.photos/seed/net6/600/400"
+image: "/images/post-06-ospf-routing-protocol.png"
 summary: "Tìm hiểu về OSPF - giao thức định tuyến động phổ biến nhất trong doanh nghiệp. Từ lý thuyết đến cấu hình thực tế trên Cisco routers."
 ---
 

@@ -4,7 +4,7 @@ date: 2023-10-25
 draft: false
 category: "LẬP TRÌNH"
 tags: ["python", "socket", "networking", "tcp", "udp", "programming"]
-image: "https://picsum.photos/seed/net4/600/400"
+image: "/images/post-04-python-socket-programming.png"
 summary: "Học lập trình socket với Python để xây dựng các ứng dụng mạng thực tế: chat server, file transfer, port scanner và network monitoring tools."
 ---
 

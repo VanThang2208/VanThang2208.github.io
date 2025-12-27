@@ -4,7 +4,7 @@ date: 2023-10-15
 draft: false
 category: "LẬP TRÌNH"
 tags: ["javascript", "automation", "programming", "beginner"]
-image: "https://picsum.photos/seed/net2/600/400"
+image: "/images/post-02-javascript-essentials-1.png"
 summary: "Tại sao Network Engineer cần học JavaScript? Khám phá cú pháp cơ bản, biến, kiểu dữ liệu, vòng lặp và cách áp dụng JavaScript vào tự động hóa mạng."
 ---
 

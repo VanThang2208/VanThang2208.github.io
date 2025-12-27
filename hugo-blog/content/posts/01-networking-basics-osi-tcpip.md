@@ -4,7 +4,7 @@ date: 2023-10-12
 draft: false
 category: "CƠ BẢN"
 tags: ["networking", "osi", "tcp/ip", "cơ bản"]
-image: "https://picsum.photos/seed/net1/600/400"
+image: "/images/post-01-networking-basics-osi-tcpip.png"
 summary: "Tìm hiểu chi tiết về mô hình OSI 7 tầng và bộ giao thức TCP/IP - nền tảng cốt lõi của mạng máy tính hiện đại. Bài viết phù hợp cho người mới bắt đầu học networking."
 ---
 

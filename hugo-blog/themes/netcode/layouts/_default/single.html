@@ -1,145 +1,214 @@
 {{ define "main" }}
-<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <!-- Back Button -->
-    <a href="/posts/" class="inline-flex items-center text-sm text-blue-600 font-medium mb-8 hover:translate-x-1 transition-transform group">
-        <svg class="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        Quay lại danh sách bài viết
-    </a>
+<!-- Reading Progress Bar -->
+<div id="reading-progress" class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-400 origin-left z-50" style="transform: scaleX(0);"></div>
 
-    <!-- Article Header -->
-    <header class="mb-10">
-        <div class="flex flex-wrap items-center gap-3 mb-4">
-            {{ with .Params.category }}
-            <span class="bg-blue-50 text-blue-600 text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full">{{ . }}</span>
+<div class="bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Back Button -->
+        <a href="/posts/" class="inline-flex items-center text-sm text-blue-600 font-semibold mb-8 hover:gap-3 transition-all group bg-white px-4 py-2 rounded-lg shadow-sm hover:shadow-md">
+            <svg class="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Quay lại danh sách
+        </a>
+
+        <!-- Article Header -->
+        <header class="mb-10 bg-white rounded-2xl p-8 sm:p-10 shadow-md border border-gray-100">
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+                {{ with .Params.category }}
+                <span class="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold tracking-wider uppercase px-4 py-2 rounded-full shadow-sm">
+                    {{ . }}
+                </span>
+                {{ end }}
+                <div class="flex items-center gap-4 text-sm text-gray-500">
+                    <span class="flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        {{ .Date.Format "02/01/2006" }}
+                    </span>
+                    <span class="text-gray-300">•</span>
+                    <span class="flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {{ .ReadingTime }} phút đọc
+                    </span>
+                </div>
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl font-black text-gray-900 leading-tight mb-6 tracking-tight">
+                {{ .Title }}
+            </h1>
+            
+            {{ if .Params.summary }}
+            <p class="text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed font-light">{{ .Params.summary }}</p>
             {{ end }}
-            <span class="text-gray-400 text-sm flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                {{ .Date.Format "02/01/2006" }}
-            </span>
-            <span class="text-gray-300">•</span>
-            <span class="text-gray-400 text-sm flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {{ .ReadingTime }} phút đọc
-            </span>
+
+            <div class="flex items-center gap-4 pt-6 border-t border-gray-100">
+                <img src="/images/profileIMG.png" alt="{{ .Site.Params.author }}" class="w-14 h-14 rounded-full ring-4 ring-blue-50 shadow-md" />
+                <div>
+                    <p class="text-base font-bold text-gray-900">{{ .Site.Params.author }}</p>
+                    <p class="text-sm text-gray-500">{{ .Site.Params.school }} - {{ .Site.Params.major }}</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Featured Image -->
+        {{ if .Params.image }}
+        <div class="mb-12 rounded-2xl overflow-hidden shadow-2xl">
+            <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-auto" />
         </div>
-        
-        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
-            {{ .Title }}
-        </h1>
-        
-        {{ if .Params.summary }}
-        <p class="text-xl text-gray-600 mb-6 leading-relaxed">{{ .Params.summary }}</p>
         {{ end }}
 
-        <div class="flex items-center space-x-4 pt-6 border-t border-gray-100">
-            <img src="/images/profileIMG.png" alt="{{ .Site.Params.author }}" class="w-12 h-12 rounded-full ring-2 ring-blue-100" />
-            <div>
-                <p class="text-sm font-bold text-gray-900">{{ .Site.Params.author }}</p>
-                <p class="text-xs text-gray-500">{{ .Site.Params.school }} - {{ .Site.Params.major }}</p>
+        <!-- Table of Contents (for long posts) -->
+        {{ partial "toc.html" . }}
+
+        <!-- Article Content -->
+        <div class="bg-white rounded-2xl p-8 sm:p-12 shadow-md border border-gray-100">
+            <div class="prose prose-blue prose-lg max-w-none text-gray-700
+                        prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight
+                        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:pb-3 prose-h2:border-b prose-h2:border-gray-200
+                        prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-4
+                        prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-3
+                        prose-p:mb-6 prose-p:leading-8 prose-p:text-gray-700
+                        prose-a:text-blue-600 prose-a:font-medium prose-a:no-underline hover:prose-a:underline hover:prose-a:text-blue-700
+                        prose-strong:text-gray-900 prose-strong:font-bold
+                        prose-code:text-pink-600 prose-code:bg-pink-50 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-[''] prose-code:after:content-['']
+                        prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:rounded-xl prose-pre:shadow-lg prose-pre:overflow-x-auto prose-pre:p-6
+                        prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:bg-blue-50 prose-blockquote:pl-6 prose-blockquote:py-4 prose-blockquote:italic prose-blockquote:text-gray-700 prose-blockquote:rounded-r-lg prose-blockquote:my-8
+                        prose-ul:list-disc prose-ul:pl-6 prose-ul:my-6 prose-ul:space-y-2
+                        prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-6 prose-ol:space-y-2
+                        prose-li:text-gray-700 prose-li:leading-7
+                        prose-img:rounded-xl prose-img:shadow-xl prose-img:my-8
+                        prose-hr:border-gray-200 prose-hr:my-12
+                        prose-table:border-collapse prose-table:w-full prose-table:my-8 prose-table:shadow-md prose-table:rounded-lg prose-table:overflow-hidden
+                        prose-th:border prose-th:border-gray-200 prose-th:bg-gradient-to-b prose-th:from-gray-50 prose-th:to-gray-100 prose-th:px-6 prose-th:py-4 prose-th:text-left prose-th:font-bold prose-th:text-gray-900
+                        prose-td:border prose-td:border-gray-200 prose-td:px-6 prose-td:py-4 prose-td:text-gray-700">
+                {{ .Content }}
             </div>
         </div>
-    </header>
 
-    <!-- Featured Image -->
-    {{ if .Params.image }}
-    <div class="mb-10 rounded-3xl overflow-hidden shadow-2xl">
-        <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-auto" />
-    </div>
-    {{ end }}
-
-    <!-- Article Content -->
-    <div class="prose prose-blue prose-lg max-w-none text-gray-700 leading-relaxed
-                prose-headings:font-bold prose-headings:text-gray-900
-                prose-h1:text-4xl prose-h1:mt-12 prose-h1:mb-6
-                prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-gray-900
-                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-gray-900
-                prose-p:mb-6 prose-p:leading-relaxed
-                prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline
-                prose-strong:text-gray-900 prose-strong:font-bold
-                prose-code:text-blue-600 prose-code:bg-blue-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
-                prose-pre:bg-gray-900 prose-pre:text-gray-100
-                prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-600
-                prose-ul:list-disc prose-ul:pl-6 prose-ul:my-6
-                prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-6
-                prose-li:my-2
-                prose-img:rounded-xl prose-img:shadow-lg
-                prose-table:border-collapse prose-table:w-full prose-table:my-8
-                prose-th:border prose-th:border-gray-300 prose-th:bg-gray-50 prose-th:px-4 prose-th:py-2 prose-th:text-left prose-th:font-bold
-                prose-td:border prose-td:border-gray-300 prose-td:px-4 prose-td:py-2">
-        {{ .Content }}
-    </div>
-
-    <!-- Tags -->
-    {{ if .Params.tags }}
-    <div class="mt-12 pt-8 border-t border-gray-100">
-        <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Tags:</h3>
-        <div class="flex flex-wrap gap-2">
-            {{ range .Params.tags }}
-            <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="px-4 py-2 bg-blue-50 text-blue-600 text-sm font-medium rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-colors">
-                #{{ . }}
-            </a>
-            {{ end }}
-        </div>
-    </div>
-    {{ end }}
-
-    <!-- Related Posts -->
-    {{ $allPosts := where .Site.RegularPages.ByDate.Reverse "Type" "posts" }}
-    {{ $otherPosts := where $allPosts "Permalink" "!=" .Permalink }}
-    {{ $related := $otherPosts | first 3 }}
-    {{ if $related }}
-    <div class="mt-16 pt-12 border-t border-gray-200">
-        <h2 class="text-2xl font-bold text-gray-900 mb-8">Bài viết liên quan</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {{ range $related }}
-            <article class="group bg-white rounded-xl border border-gray-100 hover:shadow-lg transition-all overflow-hidden">
-                {{ if .Params.image }}
-                <div class="aspect-video relative overflow-hidden bg-gray-200">
-                    <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                </div>
+        <!-- Tags -->
+        {{ if .Params.tags }}
+        <div class="mt-12 bg-white rounded-2xl p-8 shadow-md border border-gray-100">
+            <div class="flex items-center gap-2 mb-5">
+                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                </svg>
+                <h3 class="text-lg font-bold text-gray-900">Tags</h3>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                {{ range .Params.tags }}
+                <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="group px-4 py-2.5 bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-700 text-sm font-semibold rounded-xl hover:from-blue-100 hover:to-cyan-100 hover:shadow-md transition-all border border-blue-100 hover:scale-105">
+                    <span class="group-hover:tracking-wide transition-all">#{{ . }}</span>
+                </a>
                 {{ end }}
-                <div class="p-5">
-                    {{ with .Params.category }}
-                    <span class="text-[10px] font-bold tracking-widest text-blue-600 uppercase mb-2 block">{{ . }}</span>
+            </div>
+        </div>
+        {{ end }}
+
+        <!-- Related Posts -->
+        {{ $allPosts := where .Site.RegularPages.ByDate.Reverse "Type" "posts" }}
+        {{ $otherPosts := where $allPosts "Permalink" "!=" .Permalink }}
+        {{ $related := $otherPosts | first 3 }}
+        {{ if $related }}
+        <div class="mt-12">
+            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8 border border-blue-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                    </svg>
+                    <h2 class="text-2xl font-bold text-gray-900">Bài viết liên quan</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {{ range $related }}
+                    <article class="group bg-white rounded-xl border border-gray-100 hover:shadow-2xl hover:border-blue-200 transition-all duration-300 overflow-hidden">
+                        {{ if .Params.image }}
+                        <div class="aspect-video relative overflow-hidden bg-gray-200">
+                            <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                        {{ end }}
+                        <div class="p-5 space-y-3">
+                            {{ with .Params.category }}
+                            <span class="inline-block bg-blue-50 text-blue-700 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">{{ . }}</span>
+                            {{ end }}
+                            <h3 class="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
+                                <a href="{{ .Permalink }}">{{ .Title }}</a>
+                            </h3>
+                            <div class="flex items-center gap-3 text-xs text-gray-500">
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    {{ .Date.Format "02/01" }}
+                                </span>
+                                <span>•</span>
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    {{ .ReadingTime }}p
+                                </span>
+                            </div>
+                        </div>
+                    </article>
                     {{ end }}
-                    <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
-                        <a href="{{ .Permalink }}">{{ .Title }}</a>
-                    </h3>
-                    <div class="flex items-center text-xs text-gray-400">
-                        <span>{{ .Date.Format "02/01/2006" }}</span>
-                        <span class="mx-2">•</span>
-                        <span>{{ .ReadingTime }} phút</span>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+
+        <!-- Navigation Footer -->
+        <footer class="mt-12 bg-white rounded-2xl p-8 shadow-md border border-gray-100">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+                <a href="/posts/" class="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-200 hover:shadow-xl hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105">
+                    <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Xem tất cả bài viết
+                </a>
+                
+                <div class="flex items-center gap-4">
+                    <span class="text-sm font-medium text-gray-600">Chia sẻ:</span>
+                    <div class="flex gap-2">
+                        <button onclick="navigator.share({title: '{{ .Title }}', url: window.location.href}).catch(()=>{})" 
+                                class="p-3 bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all hover:scale-110 shadow-sm">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                            </svg>
+                        </button>
+                        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+                                class="p-3 bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all hover:scale-110 shadow-sm">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
-            </article>
-            {{ end }}
-        </div>
-    </div>
-    {{ end }}
-
-    <!-- Navigation Footer -->
-    <footer class="mt-16 pt-8 border-t border-gray-200">
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <a href="/posts/" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-100 hover:bg-blue-700 hover:shadow-xl transition-all">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                Xem tất cả bài viết
-            </a>
-            
-            <div class="flex items-center space-x-2 text-sm text-gray-500">
-                <span>Chia sẻ:</span>
-                <button onclick="navigator.share({title: '{{ .Title }}', url: window.location.href})" class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-                </button>
             </div>
-        </div>
-    </footer>
-</article>
+        </footer>
+    </article>
+</div>
+
+<!-- Reading Progress & Scroll to Top Scripts -->
+<script>
+    // Reading Progress Bar
+    window.addEventListener('scroll', () => {
+        const article = document.querySelector('article');
+        const progressBar = document.getElementById('reading-progress');
+        if (article && progressBar) {
+            const articleTop = article.offsetTop;
+            const articleHeight = article.offsetHeight;
+            const windowHeight = window.innerHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const articleBottom = articleTop + articleHeight - windowHeight;
+            const scrolled = Math.min(Math.max((scrollTop - articleTop) / (articleBottom - articleTop), 0), 1);
+            
+            progressBar.style.transform = `scaleX(${scrolled})`;
+        }
+    });
+</script>
 {{ end }}

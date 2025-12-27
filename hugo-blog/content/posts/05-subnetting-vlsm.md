@@ -4,7 +4,7 @@ date: 2023-11-01
 draft: false
 category: "CƠ BẢN"
 tags: ["subnetting", "vlsm", "ip-addressing", "networking", "ccna"]
-image: "https://picsum.photos/seed/net5/600/400"
+image: "/images/post-05-subnetting-vlsm.png"
 summary: "Hướng dẫn chi tiết về Subnetting và Variable Length Subnet Masking (VLSM) - kỹ năng bắt buộc cho mọi network engineer. Bao gồm công thức, ví dụ thực tế và bài tập."
 ---
 

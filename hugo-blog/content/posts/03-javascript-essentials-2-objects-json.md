@@ -4,7 +4,7 @@ date: 2023-10-20
 draft: false
 category: "NÂNG CAO"
 tags: ["javascript", "json", "api", "automation", "advanced"]
-image: "https://picsum.photos/seed/net3/600/400"
+image: "/images/post-03-javascript-essentials-2-objects-json.png"
 summary: "Đi sâu vào Objects, Arrays và JSON - định dạng dữ liệu phổ biến nhất trong các API mạng hiện đại. Học cách xử lý dữ liệu phức tạp từ network devices."
 ---
 
